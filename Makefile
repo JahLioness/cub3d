@@ -6,7 +6,8 @@ NAME = cub3d
 
 SRC = main.c \
 		parse.c \
-		init.c
+		init.c \
+		free.c
 		
 
 HEADER = cub.h

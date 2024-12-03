@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/03 11:54:33 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/03 23:46:55 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ char		**ft_read_map(char *map);
 int			ft_check_map(char **map);
 int			ft_get_data(t_data *map_data, char **file);
 int			ft_clean_init_data(t_data *map_data);
+int			ft_free_data(t_data *map_data);
 
 #endif
