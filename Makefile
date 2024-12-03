@@ -5,7 +5,8 @@ CFLAGS = -Wall -Wextra -Werror -g3
 NAME = cub3d
 
 SRC = main.c \
-		parse.c
+		parse.c \
+		init.c
 		
 
 HEADER = cub.h
