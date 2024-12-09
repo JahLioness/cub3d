@@ -7,7 +7,9 @@ NAME = cub3d
 SRC = main.c \
 		parse.c \
 		init.c \
-		free.c
+		free.c \
+		utils.c \
+		check_textures.c
 		
 
 HEADER = cub.h
@@ -29,10 +31,10 @@ NC = \033[0m
 
 all: $(MiniLibX_exec) $(NAME)
 
-$(NAME): $(OBJ) $(HEADER) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -lreadline
+$(NAME): $(OBJ) $(HEADER) $(LIBFT) $(MiniLibX_exec)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MiniLibX_exec) -lXext -lX11 -lm
 	@echo "$(GREEN)		*----------------------------------*\n \
-			|   	[OK] $(NAME) created     |\n \
+			|   	[OK] $(NAME) created   	  |\n \
 			*----------------------------------*$(NC)"
 
 %.o: %.c
@@ -56,7 +58,6 @@ $(MiniLibX_exec): $(MiniLibX)
 clean:
 	@make clean -C libft
 	@echo "$(YELLOW)[OK]$(NC) libft clean completed"
-	@make clean -C minilibx-linux
 	rm -f $(OBJ)
 	@echo "$(PURPLE)[OK]$(NC) cub3d clean completed"
 

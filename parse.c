@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:06 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/04 00:46:29 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:13:57 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,37 +123,70 @@ int	ft_get_data(t_data *map_data, char **file)
 			}
 		}
 		if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'N')
-			map_data->texture_n = ft_strdup(file[i]);
+		{
+			map_data->texture_n = ft_get_textures_path(file[i], "NO");
+			if (!map_data->texture_n)
+				return (0);
+		}
 		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'S')
-			map_data->texture_s = ft_strdup(file[i]);
+		{
+			map_data->texture_s = ft_get_textures_path(file[i], "SO");
+			if (!map_data->texture_s)
+				return (0);
+		}
 		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'W')
-			map_data->texture_w = ft_strdup(file[i]);
+		{
+			map_data->texture_w = ft_get_textures_path(file[i], "WE");
+			if (!map_data->texture_w)
+				return (0);
+		}
 		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'E')
-			map_data->texture_e = ft_strdup(file[i]);
+		{
+			map_data->texture_e = ft_get_textures_path(file[i], "EA");
+			if (!map_data->texture_e)
+				return (0);
+		}
 		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'F')
-			map_data->texture_f = ft_strdup(file[i]);
+		{
+			map_data->texture_f = ft_get_textures_path(file[i], "F");
+			if (!map_data->texture_f)
+				return (0);
+		}
 		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'C')
-			map_data->texture_c = ft_strdup(file[i]);
-		else if (!ft_check_line(file[i]) && !ft_is_whitespaces(file[i][j]))
+		{
+			map_data->texture_c = ft_get_textures_path(file[i], "C");
+			if (!map_data->texture_c)
+				return (0);
+		}
+		else if (!ft_check_line(file[i]) && !ft_is_whitespaces(file[i][j]) && map_data->texture_n != NULL)
 		{
 			len = i;
 			while (file[len])
 				len++;
-			map_data->map = ft_calloc((len - i) + 1, sizeof(char *));
+			map_data->map = ft_calloc(1, sizeof(t_map));
+			map_data->map->map_tab = ft_calloc((len - i) + 1, sizeof(char *));
 			len = 0;
 			while (file[i])
 			{
-				map_data->map[len] = ft_strdup(file[i]);
+				map_data->map->map_tab[len] = ft_strdup(file[i]);
 				len++;
 				i++;
 			}
-			map_data->map[len] = NULL;
+			map_data->map->map_tab[len] = NULL;
 		}
 		if (file[i])
 			i++;
 	}
-	if (map_data->texture_n != NULL)
+	if (map_data->texture_n != NULL && map_data->map != NULL
+		&& map_data->texture_f != NULL && map_data->texture_n != NULL
+		&& map_data->texture_s != NULL && map_data->texture_e != NULL
+		&& map_data->texture_w != NULL)
+	{
+		map_data->map->height = ft_tab_len(map_data->map->map_tab);
+		map_data->map->width = ft_longest_line(map_data->map->map_tab);
 		return (1);
+	}
 	else
 		return (0);
 }
+
