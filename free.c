@@ -19,6 +19,7 @@ int	ft_free_data(t_data *map_data)
 	free(map_data->map);
 	if (map_data->mlx)
 	{
+		// ft_free_img(map_data->mlx, 3);
 		mlx_destroy_window(map_data->mlx->mlx, map_data->mlx->win);
 		mlx_destroy_display(map_data->mlx->mlx);
 		free(map_data->mlx->mlx);
@@ -33,13 +34,16 @@ int	ft_free_data(t_data *map_data)
 	return (0);
 }
 
-int	ft_free_img(t_mlx *mlx, int i)
+int	ft_free_img(t_mlx *mlx, int index)
 {
-	while (i >= 0)
+	int i;
+
+	i = 0;
+	while (i <= index)
 	{
 		mlx_destroy_image(mlx->mlx, mlx->img[i]->img);
 		free(mlx->img[i]);
-		i--;
+		i++;
 	}
 	return (0);
 }

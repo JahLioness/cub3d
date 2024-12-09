@@ -43,5 +43,6 @@ char	*ft_get_textures_path(char *path, char *entry)
 	while (ft_is_whitespaces(path[i]))
 		i++;
 	ret = ft_strdup(path + i);
+	printf("%s\n", path + i);
 	return (ret);
 }

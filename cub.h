@@ -73,5 +73,6 @@ int			ft_free_data(t_data *map_data);
 
 /*		CHECK_TEXTURES		*/
 int			ft_check_textures(t_data *map_data);
+t_img	*ft_init_img(t_mlx *mlx, char *path);
 
 #endif
