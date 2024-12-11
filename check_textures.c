@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 15:35:32 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/09 18:19:26 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:26:11 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_img	*ft_init_img(t_mlx *mlx, char *path)
 	t_img	*img;
 
 	img = ft_calloc(1, sizeof(t_img));
-	printf("path = %s\n", path);
 	if (!img)
 		return (NULL);
 	img->img = mlx_xpm_file_to_image(mlx->mlx, path, &img->width,
@@ -49,14 +48,5 @@ int	ft_check_textures(t_data *map_data)
 			map_data->texture_e);
 	if (!map_data->mlx->img[3])
 		return (1);
-	int i = 0;
-	while(i < 4)
-	{
-		if (!map_data->mlx->img[i])
-		{
-			free(map_data->mlx->img[i]);
-		}
-		i++;
-	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:54 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/09 18:10:58 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:26:02 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,26 @@ int	ft_longest_line(char **map)
 	return (width);
 }
 
+char	*ft_strdup_wtn(const char *s)
+{
+	int		i;
+	char	*ret;
+
+	if (!s)
+		return (NULL);
+	ret = ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (s[i] && s[i] != '\n')
+	{
+		ret[i] = s[i];
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
+}
+
 char	*ft_get_textures_path(char *path, char *entry)
 {
 	int		i;
@@ -42,7 +62,6 @@ char	*ft_get_textures_path(char *path, char *entry)
 		return(NULL);
 	while (ft_is_whitespaces(path[i]))
 		i++;
-	ret = ft_strdup(path + i);
-	printf("%s\n", path + i);
+	ret = ft_strdup_wtn(path + i);
 	return (ret);
 }
