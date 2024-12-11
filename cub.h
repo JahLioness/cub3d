@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/09 18:11:27 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:43:33 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int			ft_free_data(t_data *map_data);
 
 /*		CHECK_TEXTURES		*/
 int			ft_check_textures(t_data *map_data);
-t_img	*ft_init_img(t_mlx *mlx, char *path);
+t_img		*ft_init_img(t_mlx *mlx, char *path);
+int			ft_check_rgb(t_data *map_data);
 
 #endif

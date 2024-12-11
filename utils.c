@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:54 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/11 17:26:02 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:58:11 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_strdup_wtn(const char *s)
 	if (!ret)
 		return (NULL);
 	i = 0;
-	while (s[i] && s[i] != '\n')
+	while (s[i] && !ft_is_whitespaces(s[i]))
 	{
 		ret[i] = s[i];
 		i++;

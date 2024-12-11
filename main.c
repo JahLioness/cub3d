@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/09 17:47:25 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:43:55 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int ac, char **av, char **env)
 				i++;
 			}
 			mlx_start(&map_data);
-			if(ft_check_textures(&map_data))
+			if(ft_check_textures(&map_data) || ft_check_rgb(&map_data))
 				return (ft_free_data(&map_data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid image files", 2), 1);
 		}
