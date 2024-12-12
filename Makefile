@@ -6,10 +6,11 @@ NAME = cub3d
 
 SRC = main.c \
 		parse.c \
+		parse_map.c \
 		init.c \
 		free.c \
 		utils.c \
-		check_textures.c
+		check_textures.c \
 		
 
 HEADER = cub.h

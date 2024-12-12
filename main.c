@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/11 17:43:55 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:21:43 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	main(int ac, char **av, char **env)
 {
 	t_data	map_data;
-	// t_mlx	mlx;
 	char	**test;
 	int		i;
 
@@ -47,6 +46,9 @@ int	main(int ac, char **av, char **env)
 			if(ft_check_textures(&map_data) || ft_check_rgb(&map_data))
 				return (ft_free_data(&map_data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid image files", 2), 1);
+			else if (ft_check_map_closed(map_data.map->map_tab))
+				return (ft_free_data(&map_data), ft_free_tab(test),
+				ft_putendl_fd("Error invalid map file", 2), 1);
 		}
 		else
 			return (ft_free_data(&map_data), ft_free_tab(test),

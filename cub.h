@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/11 17:43:33 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:19:28 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ typedef struct s_data
 char		**ft_read_map(char *map);
 int			ft_check_map(char **map);
 int			ft_get_data(t_data *map_data, char **file);
+
+/*		PARSE_MAP*/
+int			ft_check_map_closed(char **map);
 
 /*		INIT		*/
 int			ft_clean_init_data(t_data *map_data);
