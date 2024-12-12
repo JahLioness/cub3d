@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:54 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/11 17:58:11 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:03:48 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_get_textures_path(char *path, char *entry)
 	if (!ft_strncmp(path + i, entry, ft_strlen(entry)))
 		i += ft_strlen(entry);
 	if (!ft_is_whitespaces(path[i]))
-		return(NULL);
+		return (NULL);
 	while (ft_is_whitespaces(path[i]))
 		i++;
 	ret = ft_strdup_wtn(path + i);

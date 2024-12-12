@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:52:07 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/11 15:57:31 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:03:10 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	mlx_start(t_data *map_data)
 		return (1);
 	map_data->mlx->mlx = mlx_init();
 	if (!map_data->mlx->mlx)
-		return(free(map_data->mlx), 1);
+		return (free(map_data->mlx), 1);
 	map_data->mlx->win = mlx_new_window(map_data->mlx->mlx, 600, 400, "cub3D");
 	if (!map_data->mlx->win)
 		return (free(map_data->mlx->mlx), free(map_data->mlx), 1);

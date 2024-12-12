@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:06 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/09 18:13:57 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:55:31 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,58 @@ int	ft_check_line(char *str)
 	return (0);
 }
 
+int	ft_get_textures(char **file, t_data *map_data, int i, int j)
+{
+	if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'N')
+		map_data->texture_n = ft_get_textures_path(file[i], "NO");
+	else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'S')
+		map_data->texture_s = ft_get_textures_path(file[i], "SO");
+	else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'W')
+		map_data->texture_w = ft_get_textures_path(file[i], "WE");
+	else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'E')
+		map_data->texture_e = ft_get_textures_path(file[i], "EA");
+	else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'F')
+		map_data->texture_f = ft_get_textures_path(file[i], "F");
+	else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'C')
+		map_data->texture_c = ft_get_textures_path(file[i], "C");
+	return (0);
+}
+
+int	ft_get_map(char **file, int *i, int j, t_data *map_data)
+{
+	int	len;
+
+	if (!ft_check_line(file[*i]) && !ft_is_whitespaces(file[*i][j])
+			&& map_data->texture_n != NULL)
+	{
+		len = *i;
+		while (file[len])
+			len++;
+		map_data->map = ft_calloc(1, sizeof(t_map));
+		map_data->map->map_tab = ft_calloc((len - *i) + 1, sizeof(char *));
+		len = 0;
+		while (file[*i])
+		{
+			map_data->map->map_tab[len] = ft_strdup(file[*i]);
+			len++;
+			(*i)++;
+		}
+		map_data->map->map_tab[len] = NULL;
+	}
+	return (0);
+}
+
+int	ft_check_data(t_data *map_data)
+{
+	return (map_data->texture_n != NULL && map_data->map != NULL
+		&& map_data->texture_f != NULL && map_data->texture_n != NULL
+		&& map_data->texture_s != NULL && map_data->texture_e != NULL
+		&& map_data->texture_w != NULL);
+}
+
 int	ft_get_data(t_data *map_data, char **file)
 {
 	int	i;
-	int	len;
 	int	j;
 
 	i = 0;
@@ -122,71 +170,10 @@ int	ft_get_data(t_data *map_data, char **file)
 				j = 0;
 			}
 		}
-		if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'N')
-		{
-			map_data->texture_n = ft_get_textures_path(file[i], "NO");
-			if (!map_data->texture_n)
-				return (0);
-		}
-		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'S')
-		{
-			map_data->texture_s = ft_get_textures_path(file[i], "SO");
-			if (!map_data->texture_s)
-				return (0);
-		}
-		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'W')
-		{
-			map_data->texture_w = ft_get_textures_path(file[i], "WE");
-			if (!map_data->texture_w)
-				return (0);
-		}
-		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'E')
-		{
-			map_data->texture_e = ft_get_textures_path(file[i], "EA");
-			if (!map_data->texture_e)
-				return (0);
-		}
-		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'F')
-		{
-			map_data->texture_f = ft_get_textures_path(file[i], "F");
-			if (!map_data->texture_f)
-				return (0);
-		}
-		else if (!ft_is_whitespaces(file[i][j]) && file[i][j] == 'C')
-		{
-			map_data->texture_c = ft_get_textures_path(file[i], "C");
-			if (!map_data->texture_c)
-				return (0);
-		}
-		else if (!ft_check_line(file[i]) && !ft_is_whitespaces(file[i][j]) && map_data->texture_n != NULL)
-		{
-			len = i;
-			while (file[len])
-				len++;
-			map_data->map = ft_calloc(1, sizeof(t_map));
-			map_data->map->map_tab = ft_calloc((len - i) + 1, sizeof(char *));
-			len = 0;
-			while (file[i])
-			{
-				map_data->map->map_tab[len] = ft_strdup(file[i]);
-				len++;
-				i++;
-			}
-			map_data->map->map_tab[len] = NULL;
-		}
+		ft_get_textures(file, map_data, i, j);
+		ft_get_map(file, &i, j, map_data);
 		if (file[i])
 			i++;
 	}
-	if (map_data->texture_n != NULL && map_data->map != NULL
-		&& map_data->texture_f != NULL && map_data->texture_n != NULL
-		&& map_data->texture_s != NULL && map_data->texture_e != NULL
-		&& map_data->texture_w != NULL)
-	{
-		map_data->map->height = ft_tab_len(map_data->map->map_tab);
-		map_data->map->width = ft_longest_line(map_data->map->map_tab);
-		return (1);
-	}
-	else
-		return (0);
+	return (ft_check_data(map_data));
 }
-

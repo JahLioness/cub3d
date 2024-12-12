@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 23:44:57 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/11 17:18:36 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:03:33 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_free_data(t_data *map_data)
 
 int	ft_free_img(t_mlx *mlx, int index)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i <= index)
