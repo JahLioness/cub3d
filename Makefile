@@ -5,12 +5,12 @@ CFLAGS = -Wall -Wextra -Werror -g3
 NAME = cub3d
 
 SRC = main.c \
-		parse.c \
-		parse_map.c \
+		parse/parse.c \
+		parse/parse_map.c \
 		init.c \
 		free.c \
 		utils.c \
-		check_textures.c \
+		parse/check_textures.c \
 		
 
 HEADER = cub.h
