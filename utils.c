@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:54 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/16 14:56:21 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:19:18 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_longest_line(char **map)
 char	*ft_strdup_wtn(const char *s)
 {
 	int		i;
-	char	*ret;
+	char	*ret; 
 
 	if (!s)
 		return (NULL);
