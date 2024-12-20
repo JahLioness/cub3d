@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/12 17:21:43 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:40:28 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int	main(int ac, char **av, char **env)
 			else if (ft_check_map_closed(map_data.map->map_tab))
 				return (ft_free_data(&map_data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid map file", 2), 1);
+			else if (ft_check_player_start(map_data.map->map_tab))
+				return (ft_free_data(&map_data), ft_free_tab(test),
+					ft_putendl_fd("Error invalid player start", 2), 1);
 		}
 		else
 			return (ft_free_data(&map_data), ft_free_tab(test),
