@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:13:37 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/26 17:05:21 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:26:51 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_check_player(char **map)
 		}
 		i++;
 	}
-	if (player > 1 || player == 0)
+	if (player != 1)
 		return (1);
 	return (0);
 }

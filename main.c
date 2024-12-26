@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/26 17:09:18 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:27:22 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int	main(int ac, char **av, char **env)
 			else if (ft_check_map_closed(map_data.map->map_tab) || ft_check_player(map_data.map->map_tab))
 				return (ft_free_data(&map_data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid map file", 2), 1);
+			else if (ft_check_player_start(map_data.map->map_tab))
+				return (ft_free_data(&map_data), ft_free_tab(test),
+					ft_putendl_fd("Error invalid player start", 2), 1);
 		}
 		else
 			return (ft_free_data(&map_data), ft_free_tab(test),
