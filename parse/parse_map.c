@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:13:37 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/20 14:20:48 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:05:21 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	ft_check_map_closed(char **map)
 		{
 			if (map[i][j] == '\t')
 				return (1);
-			else if (map[i][j] == '0')
+			else if (map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S'
+				|| map[i][j] == 'E' || map[i][j] == 'W')
 			{
 				if (ft_check_char(map, i, j))
 					return (1);
@@ -58,11 +59,27 @@ int	ft_check_map_closed(char **map)
 	return (0);
 }
 
-// if (i - 1 >= 0 && map[i - 1][j] && ft_is_whitespaces(map[i - 1][j]))
-// 	return (1);
-// if (map[i + 1][j] && ft_is_whitespaces(map[i + 1][j]))
-// 	return (1);
-// if (j - 1 >= 0 && map[i][j - 1] && ft_is_whitespaces(map[i][j - 1]))
-// 	return (1);
-// if (map[i][j  + 1] && ft_is_whitespaces(map[i][j + 1]))
-// 	return (1);
+int	ft_check_player(char **map)
+{
+	int	i;
+	int	j;
+	int	player;
+
+	i = 0;
+	player = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
+				|| map[i][j] == 'W')
+				player++;
+			j++;
+		}
+		i++;
+	}
+	if (player > 1 || player == 0)
+		return (1);
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/19 18:05:33 by ede-cola         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:08:38 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,12 @@ int				ft_get_data(t_data *map_data, char **file);
 
 /*		PARSE_MAP*/
 int				ft_check_map_closed(char **map);
+int				ft_check_player(char **map);
 
 /*		INIT		*/
 int				ft_clean_init_data(t_data *map_data);
 int				mlx_start(t_data *map_data);
+int				mlx_window_init(t_data *map_data);
 
 /*		UTILS		*/
 int				ft_longest_line(char **map);
