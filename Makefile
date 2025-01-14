@@ -11,6 +11,7 @@ SRC = main.c \
 		free.c \
 		utils.c \
 		parse/check_textures.c \
+		exec/convert_map.c
 		
 
 HEADER = cub.h

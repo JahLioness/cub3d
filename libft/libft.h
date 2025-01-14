@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:33:02 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/09/17 14:38:53 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:20:20 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char		*ft_strlchr(const char *s, int c, int i);
 
 /*              Int manipulation           */
 int			ft_atoi(const char *nptr);
+int			ft_atoi_char(const char nptr);
 long long	ft_atoll(char *str);
 size_t		ft_nbr_length(int n);
 

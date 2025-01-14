@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:13:27 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/01/29 12:11:59 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:20:04 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,14 @@ int	ft_atoi(const char *nptr)
 	if (ft_strncmp(nptr, str_cmp, ft_strlen(nptr)))
 		return (free(str_cmp), -1);
 	return (free(str_cmp), nb);
+}
+
+int	ft_atoi_char(const char nptr)
+{
+	int		nb;
+
+	nb = 0;
+	if (nptr >= 48 && nptr <= 57)
+		nb = nb * 10 + (nptr - '0');
+	return (nb);
 }
