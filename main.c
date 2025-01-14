@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/14 13:43:16 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:49:44 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	main(int ac, char **av, char **env)
 	char	**test;
 	size_t		i;
 	size_t		j;
-	int		**int_test;
 
 	if (!env || !*env)
 		return (ft_putendl_fd("Error env is needed to launch cub3d", 2), 1);
@@ -58,7 +57,7 @@ int	main(int ac, char **av, char **env)
 		if (mlx_window_init(&map_data))
 			return (ft_free_data(&map_data), ft_free_tab(test),
 				ft_putendl_fd("Error initalizing window failed", 2), 1);
-		int_test = ft_convert_map(map_data.map->map_tab);
+		map_data.map->map_int = ft_convert_map(map_data.map->map_tab);
 		i = 0;
 		while (i < ft_tab_len(map_data.map->map_tab))
 		{
@@ -66,14 +65,15 @@ int	main(int ac, char **av, char **env)
 			j = 0;
 			while (j < ft_strlen(map_data.map->map_tab[i]) - 1)
 			{
-				printf("%d,", int_test[i][j]);
+				printf("%d,", map_data.map->map_int[i][j]);
 				j++;
 			}
 			printf("}\n");
-			free(int_test[i]);
 			i++;
 		}
-		free(int_test);
+		ft_clean_init_player(&map_data);
+		if (!ft_get_player_pos(&map_data))
+			printf("player pos x = %d, player pos y = %d\n", map_data.player->pos_x, map_data.player->pos_y);
 		ft_free_tab(test);
 		ft_free_data(&map_data);
 	}

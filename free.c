@@ -6,16 +6,33 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 23:44:57 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/26 17:12:12 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:53:51 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
+int	ft_free_int_tab(t_data *map_data)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < ft_tab_len(map_data->map->map_tab))
+	{
+		free(map_data->map->map_int[i]);
+		i++;
+	}
+	free(map_data->map->map_int);
+	return (0);
+}
+
 int	ft_free_data(t_data *map_data)
 {
-	if (map_data->map && map_data->map->map_tab)
+	if (map_data->map && map_data->map->map_int)
+	{
+		ft_free_int_tab(map_data);
 		ft_free_tab(map_data->map->map_tab);
+	}
 	free(map_data->map);
 	if (map_data->mlx)
 	{
@@ -26,6 +43,8 @@ int	ft_free_data(t_data *map_data)
 		free(map_data->mlx->mlx);
 		free(map_data->mlx);
 	}
+	if (map_data->player)
+		free(map_data->player);
 	free(map_data->texture_f);
 	free(map_data->texture_c);
 	free(map_data->texture_n);

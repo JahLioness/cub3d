@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/14 13:12:39 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:50:22 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_map
 	int			height;
 	int			width;
 	char		**map_tab;
+	int			**map_int;
 }				t_map;
 
 typedef struct s_img
@@ -74,6 +75,7 @@ int				ft_check_player(char **map);
 
 /*		INIT		*/
 int				ft_clean_init_data(t_data *map_data);
+int				ft_clean_init_player(t_data *map_data);
 int				mlx_start(t_data *map_data);
 int				mlx_window_init(t_data *map_data);
 
@@ -92,5 +94,8 @@ int				ft_check_rgb(t_data *map_data);
 
 /*		CONVERT_MAP			*/
 int				**ft_convert_map(char **map);
+
+/*		RAYCAST_UTILS		*/
+int				ft_get_player_pos(t_data *map_data);
 
 #endif
