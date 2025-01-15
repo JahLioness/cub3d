@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:06 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/20 11:47:15 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:28:19 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,13 @@ int	ft_get_textures(char **file, t_data *map_data, int i, int j)
 	return (0);
 }
 
-int	ft_get_map(char **file, int *i, int j, t_data *map_data)
+void	ft_get_map(char **file, int *i, int j, t_data *map_data)
 {
-	int	len;
+	int		len;
+	size_t	max_width;
 
 	if (!ft_check_line(file[*i]) && !ft_is_whitespaces(file[*i][j])
-			&& map_data->texture_n != NULL)
+		&& map_data->texture_n != NULL)
 	{
 		len = *i;
 		while (file[len])
@@ -133,15 +134,19 @@ int	ft_get_map(char **file, int *i, int j, t_data *map_data)
 		map_data->map = ft_calloc(1, sizeof(t_map));
 		map_data->map->map_tab = ft_calloc((len - *i) + 1, sizeof(char *));
 		len = 0;
+		max_width = ft_longest_line(file);
 		while (file[*i])
 		{
-			map_data->map->map_tab[len] = ft_strdup(file[*i]);
+			if (ft_strlen(file[*i]) < max_width)
+				map_data->map->map_tab[len] = ft_join_to_comb_empty(file[*i],
+						max_width);
+			else
+				map_data->map->map_tab[len] = ft_strdup(file[*i]);
 			len++;
 			(*i)++;
 		}
 		map_data->map->map_tab[len] = NULL;
 	}
-	return (0);
 }
 
 int	ft_check_data(t_data *map_data)

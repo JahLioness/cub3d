@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:25:19 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/14 14:49:30 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:26:47 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	ft_get_player_pos(t_data *map_data)
 		{
 			if (map_data->map->map_int[i][j] == 3)
 			{
-				map_data->player->pos_y = (int)i;
-				map_data->player->pos_x = (int)j;
+				map_data->player->pos_y = (double)i;
+				map_data->player->pos_x = (double)j;
 				return (0);
 			}
 			j++;
@@ -35,4 +35,3 @@ int	ft_get_player_pos(t_data *map_data)
 	}
 	return (1);
 }
-

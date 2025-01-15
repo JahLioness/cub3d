@@ -6,13 +6,13 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:54 by ede-cola          #+#    #+#             */
-/*   Updated: 2024/12/20 12:19:18 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:27:31 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int	ft_longest_line(char **map)
+size_t	ft_longest_line(char **map)
 {
 	int		i;
 	size_t	width;
@@ -31,7 +31,7 @@ int	ft_longest_line(char **map)
 char	*ft_strdup_wtn(const char *s)
 {
 	int		i;
-	char	*ret; 
+	char	*ret;
 
 	if (!s)
 		return (NULL);
@@ -63,5 +63,26 @@ char	*ft_get_textures_path(char *path, char *entry)
 	while (ft_is_whitespaces(path[i]))
 		i++;
 	ret = ft_strdup_wtn(path + i);
+	return (ret);
+}
+
+char	*ft_join_to_comb_empty(char *line, size_t longest_line)
+{
+	size_t	i;
+	char	*ret;
+
+	ret = ft_calloc(longest_line + 1, sizeof(char));
+	i = 0;
+	while (line[i] && line[i] != '\n')
+	{
+		ret[i] = line[i];
+		i++;
+	}
+	while (i < longest_line)
+	{
+		ret[i] = '2';
+		i++;
+	}
+	ret[i] = '\0';
 	return (ret);
 }

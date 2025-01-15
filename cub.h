@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/14 14:50:22 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:27:42 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	int			pos_y;
-	int			pos_x;
-	int			dir_y;
-	int			dir_x;
+	double		pos_y;
+	double		pos_x;
+	double		dir_y;
+	double		dir_x;
 }				t_player;
 
 typedef struct s_mlx
@@ -80,8 +80,9 @@ int				mlx_start(t_data *map_data);
 int				mlx_window_init(t_data *map_data);
 
 /*		UTILS		*/
-int				ft_longest_line(char **map);
+size_t			ft_longest_line(char **map);
 char			*ft_get_textures_path(char *path, char *entry);
+char			*ft_join_to_comb_empty(char *line, size_t longest_line);
 
 /*		FREE		*/
 int				ft_free_img(t_mlx *mlx, int n);

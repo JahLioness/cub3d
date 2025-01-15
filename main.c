@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/14 14:49:44 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:25:31 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int ac, char **av, char **env)
 				ft_putendl_fd("Error initalizing window failed", 2), 1);
 		map_data.map->map_int = ft_convert_map(map_data.map->map_tab);
 		i = 0;
+		printf("\n");
 		while (i < ft_tab_len(map_data.map->map_tab))
 		{
 			printf("{");
@@ -73,7 +74,7 @@ int	main(int ac, char **av, char **env)
 		}
 		ft_clean_init_player(&map_data);
 		if (!ft_get_player_pos(&map_data))
-			printf("player pos x = %d, player pos y = %d\n", map_data.player->pos_x, map_data.player->pos_y);
+			printf("player pos x = %f, player pos y = %f\n", map_data.player->pos_x, map_data.player->pos_y);
 		ft_free_tab(test);
 		ft_free_data(&map_data);
 	}
