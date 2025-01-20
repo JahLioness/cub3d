@@ -14,7 +14,6 @@ SRC = main.c \
 		exec/convert_map.c \
 		exec/raycast_test.c \
 		
-
 HEADER = cub.h
 
 LIBFT = libft/libft.a
@@ -37,7 +36,7 @@ all: $(MiniLibX_exec) $(NAME)
 $(NAME): $(OBJ) $(HEADER) $(LIBFT) $(MiniLibX_exec)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MiniLibX_exec) -lXext -lX11 -lm
 	@echo "$(GREEN)		*----------------------------------*\n \
-			|   	[OK] $(NAME) created   	  |\n \
+			|   	[OK] $(NAME) created   	   |\n \
 			*----------------------------------*$(NC)"
 
 %.o: %.c

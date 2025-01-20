@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/15 16:27:42 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:26:12 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "./minilibx-linux/mlx.h"
 # include "libft/libft.h"
+# include <math.h>
 
 typedef struct s_map
 {

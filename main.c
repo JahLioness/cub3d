@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/15 16:25:31 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:17:22 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ int	main(int ac, char **av, char **env)
 			j = 0;
 			while (j < ft_strlen(map_data.map->map_tab[i]) - 1)
 			{
-				printf("%d,", map_data.map->map_int[i][j]);
+				printf("%d", map_data.map->map_int[i][j]);
+				if (j != ft_strlen(map_data.map->map_tab[i]) - 2)
+					printf(",");
 				j++;
 			}
 			printf("}\n");

@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:54 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/15 16:27:31 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:16:04 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,12 @@ char	*ft_join_to_comb_empty(char *line, size_t longest_line)
 		ret[i] = line[i];
 		i++;
 	}
-	while (i < longest_line)
+	while (i < longest_line - 1)
 	{
 		ret[i] = '2';
 		i++;
 	}
+	ret[i++] = '\n';
 	ret[i] = '\0';
 	return (ret);
 }
