@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/16 16:26:12 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:35:48 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,9 @@ int				**ft_convert_map(char **map);
 
 /*		RAYCAST_UTILS		*/
 int				ft_get_player_pos(t_data *map_data);
+
+
+/*		TEST		*/
+void	raycasting(t_data *map_data);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/20 12:17:22 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:46:06 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	main(int ac, char **av, char **env)
 		ft_clean_init_player(&map_data);
 		if (!ft_get_player_pos(&map_data))
 			printf("player pos x = %f, player pos y = %f\n", map_data.player->pos_x, map_data.player->pos_y);
+		raycasting(&map_data);
+		// mlx_loop(map_data.mlx->mlx);
 		ft_free_tab(test);
 		ft_free_data(&map_data);
 	}
