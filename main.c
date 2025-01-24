@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/20 12:17:22 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:30:20 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int	main(int ac, char **av, char **env)
 				printf("%s", map_data.map->map_tab[i]);
 				i++;
 			}
-			mlx_start(&map_data);
+			if (mlx_start(&map_data))
+				return (ft_free_data(&map_data), ft_free_tab(test),
+					ft_putendl_fd("Error initalizing mlx failed", 2), 1);
 			if(ft_check_textures(&map_data) || ft_check_rgb(&map_data))
 				return (ft_free_data(&map_data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid image files", 2), 1);

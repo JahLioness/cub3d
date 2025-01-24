@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 23:44:57 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/14 14:53:51 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:34:51 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	ft_free_data(t_data *map_data)
 	{
 		ft_free_int_tab(map_data);
 		ft_free_tab(map_data->map->map_tab);
+		free(map_data->map);
 	}
-	free(map_data->map);
 	if (map_data->mlx)
 	{
 		ft_free_img(map_data->mlx, 3);
