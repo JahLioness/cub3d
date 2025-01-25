@@ -6,7 +6,7 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 23:44:57 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/25 04:37:06 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/01/25 05:19:31 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	ft_free_data(t_data *data)
 {
 	if (data->map && data->map->map_int)
 	{
-		ft_free_int_tab(map_data);
-		ft_free_tab(map_data->map->map_tab);
-		free(map_data->map);
+		ft_free_int_tab(data);
+		ft_free_tab(data->map->map_tab);
+		free(data->map);
 	}
-	if (map_data->mlx)
+	if (data->mlx)
 	{
 		ft_free_img(data->mlx, 3);
 		if (data->mlx->win)

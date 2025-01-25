@@ -6,7 +6,7 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/25 04:37:31 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/01/25 05:19:04 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	main(int ac, char **av, char **env)
 				printf("%s", data.map->map_tab[i]);
 				i++;
 			}
-			if (mlx_start(&map_data))
-				return (ft_free_data(&map_data), ft_free_tab(test),
+			if (mlx_start(&data))
+				return (ft_free_data(&data), ft_free_tab(test),
 					ft_putendl_fd("Error initalizing mlx failed", 2), 1);
-			if(ft_check_textures(&map_data) || ft_check_rgb(&map_data))
-				return (ft_free_data(&map_data), ft_free_tab(test),
+			if(ft_check_textures(&data) || ft_check_rgb(&data))
+				return (ft_free_data(&data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid image files", 2), 1);
 			else if (ft_check_map_closed(data.map->map_tab) || ft_check_player(data.map->map_tab))
 				return (ft_free_data(&data), ft_free_tab(test),
