@@ -1,6 +1,6 @@
-NO ./textures/floor.xpm
-SO ./textures/wall.xpm
-WE ./textures/wall.xpm
+NO ./textures/floor_test.xpm
+SO ./textures/wall_test.xpm
+WE ./textures/player_test.xpm
 EA ./textures/wall.xpm
 
 F 255,100,0

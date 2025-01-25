@@ -1,0 +1,14 @@
+NO ./textures/floor_test.xpm
+SO ./textures/wall_test.xpm
+WE ./textures/player_test.xpm
+EA ./textures/wall.xpm
+
+F 255,100,0
+C 225,30,0
+
+1111111111111111111
+10000000110000N00001
+1001110000001110101
+111000000000000011
+1000000010000001111
+111111111111111

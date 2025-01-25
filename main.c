@@ -6,15 +6,24 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/23 18:46:06 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/01/25 01:09:41 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
+void	display_game(t_data *data)
+{
+	draw_floor(data);
+	draw_wall(data);
+	draw_player(data);
+	mlx_hook(data->mlx->win, 2, 1L << 0, press_key, data);
+	mlx_loop(data->mlx->mlx);
+}
+
 int	main(int ac, char **av, char **env)
 {
-	t_data	map_data;
+	t_data	data;
 	char	**test;
 	size_t		i;
 	size_t		j;
@@ -29,58 +38,59 @@ int	main(int ac, char **av, char **env)
 		if (!test)
 			return (ft_putendl_fd("Error can't read map", 2), 1);
 		i = 0;
-		ft_clean_init_data(&map_data);
-		if (ft_get_data(&map_data, test))
+		ft_clean_init_data(&data);
+		if (ft_get_data(&data, test))
 		{
-			printf("texture N = %s\n", map_data.texture_n);
-			printf("texture S = %s\n", map_data.texture_s);
-			printf("texture W = %s\n", map_data.texture_w);
-			printf("texture E = %s\n", map_data.texture_e);
-			printf("texture F = %s\n", map_data.texture_f);
-			printf("texture C = %s\n", map_data.texture_c);
-			while (map_data.map->map_tab[i])
+			printf("texture N = %s\n", data.texture_n);
+			printf("texture S = %s\n", data.texture_s);
+			printf("texture W = %s\n", data.texture_w);
+			printf("texture E = %s\n", data.texture_e);
+			printf("texture F = %s\n", data.texture_f);
+			printf("texture C = %s\n", data.texture_c);
+			while (data.map->map_tab[i])
 			{
-				printf("%s", map_data.map->map_tab[i]);
+				printf("%s", data.map->map_tab[i]);
 				i++;
 			}
-			mlx_start(&map_data);
-			if(ft_check_textures(&map_data) || ft_check_rgb(&map_data))
-				return (ft_free_data(&map_data), ft_free_tab(test),
+			mlx_start(&data);
+			if(ft_check_textures(&data) || ft_check_rgb(&data))
+				return (ft_free_data(&data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid image files", 2), 1);
-			else if (ft_check_map_closed(map_data.map->map_tab) || ft_check_player(map_data.map->map_tab))
-				return (ft_free_data(&map_data), ft_free_tab(test),
+			else if (ft_check_map_closed(data.map->map_tab) || ft_check_player(data.map->map_tab))
+				return (ft_free_data(&data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid map file", 2), 1);
 		}
 		else
-			return (ft_free_data(&map_data), ft_free_tab(test),
+			return (ft_free_data(&data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid map file", 2), 1);
-		if (mlx_window_init(&map_data))
-			return (ft_free_data(&map_data), ft_free_tab(test),
+		if (mlx_window_init(&data))
+			return (ft_free_data(&data), ft_free_tab(test),
 				ft_putendl_fd("Error initalizing window failed", 2), 1);
-		map_data.map->map_int = ft_convert_map(map_data.map->map_tab);
+		data.map->width = ft_strlen(data.map->map_tab[0]);
+		data.map->height = ft_tab_len(data.map->map_tab);
+		data.map->map_int = ft_convert_map(data.map->map_tab);
 		i = 0;
 		printf("\n");
-		while (i < ft_tab_len(map_data.map->map_tab))
+		while (i < ft_tab_len(data.map->map_tab))
 		{
 			printf("{");
 			j = 0;
-			while (j < ft_strlen(map_data.map->map_tab[i]) - 1)
+			while (j < ft_strlen(data.map->map_tab[i]) - 1)
 			{
-				printf("%d", map_data.map->map_int[i][j]);
-				if (j != ft_strlen(map_data.map->map_tab[i]) - 2)
+				printf("%d", data.map->map_int[i][j]);
+				if (j != ft_strlen(data.map->map_tab[i]) - 2)
 					printf(",");
 				j++;
 			}
 			printf("}\n");
 			i++;
 		}
-		ft_clean_init_player(&map_data);
-		if (!ft_get_player_pos(&map_data))
-			printf("player pos x = %f, player pos y = %f\n", map_data.player->pos_x, map_data.player->pos_y);
-		raycasting(&map_data);
-		// mlx_loop(map_data.mlx->mlx);
+		ft_clean_init_player(&data);
+		if (!ft_get_player_pos(&data))
+			printf("player pos x = %f, player pos y = %f\n", data.player->pos_x, data.player->pos_y);
+		display_game(&data);
 		ft_free_tab(test);
-		ft_free_data(&map_data);
+		ft_free_data(&data);
 	}
 	return (0);
 }
