@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:25:19 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/25 04:27:05 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:13:18 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ int	press_key(unsigned int keycode, t_data *data)
 	printf("player[%d][%d] = %d\n", (int)data->player->pos_y, (int)data->player->pos_x, data->map->map_int[(int)data->player->pos_y][(int)data->player->pos_x]);
 	mlx_clear_window(data->mlx->mlx, data->mlx->win);
 	if (keycode == KEY_ESC)
+	{
+		ft_free_data(data);
 		exit(0);
+	}
 	if (keycode == KEY_A)
 	{
 		if (data->player->player_angle < 0)

@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/27 18:03:47 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:14:51 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ int	main(int ac, char **av, char **env)
 		else
 			return (ft_free_data(&data), ft_free_tab(test),
 				ft_putendl_fd("Error invalid map file", 2), 1);
+		ft_free_tab(test);
 		data.map->width = ft_strlen(data.map->map_tab[0]);
 		data.map->height = ft_tab_len(data.map->map_tab);
 		data.map->map_int = ft_convert_map(data.map->map_tab);
 		if (mlx_window_init(&data))
-			return (ft_free_data(&data), ft_free_tab(test),
+			return (ft_free_data(&data), 
 				ft_putendl_fd("Error initalizing window failed", 2), 1);
 		i = 0;
 		printf("\n");
@@ -91,7 +92,6 @@ int	main(int ac, char **av, char **env)
 		if (!ft_get_player_pos(&data))
 			printf("player pos x = %f, player pos y = %f\n", data.player->pos_x, data.player->pos_y);
 		display_game(&data);
-		ft_free_tab(test);
 		ft_free_data(&data);
 	}
 	return (0);
