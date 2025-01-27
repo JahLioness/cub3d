@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:52:07 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/25 04:29:02 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:04:39 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ int	mlx_start(t_data *data)
 
 int	mlx_window_init(t_data *data)
 {
-	data->mlx->win = mlx_new_window(data->mlx->mlx, WIDTH, HEIGHT, "cub3D");
+	if (data->map->width && data->map->height)
+		data->mlx->win = mlx_new_window(data->mlx->mlx, data->map->width * PIXEL, data->map->height * PIXEL, "cub3D");
+	else
+		data->mlx->win = mlx_new_window(data->mlx->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!data->mlx->win)
 		return (free(data->mlx->mlx), free(data->mlx), 1);
 	return (0);
