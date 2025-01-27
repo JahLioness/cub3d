@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/27 18:03:29 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:18:43 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # define KEY_S 115
 # define KEY_D 100
 # define KEY_ESC 65307
+
+typedef struct s_size
+{
+	int			screen_width;
+	int			screen_height;
+}				t_size;
 
 typedef struct s_map
 {
