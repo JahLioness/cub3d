@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/27 18:14:51 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:40:08 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	display_game(t_data *data)
 	draw_floor(data);
 	draw_wall(data);
 	draw_player(data);
+	draw_ray(data);
 	mlx_hook(data->mlx->win, 2, 1L << 0, press_key, data);
 	mlx_loop(data->mlx->mlx);
 }
