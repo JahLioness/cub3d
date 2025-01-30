@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:06 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/24 22:38:52 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:28:36 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,4 +181,30 @@ int	ft_get_data(t_data *data, char **file)
 			i++;
 	}
 	return (ft_check_data(data));
+}
+
+int	ft_check_one_extension(char *map)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (map[i])
+	{
+		if (map[i] == '.')
+			flag++;
+		i++;
+	}
+	if (flag != 1)
+		return (0);
+	return (1);
+}
+
+int	ft_check_map_extension(char *file)
+{
+	if (ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4)
+		|| !ft_check_one_extension(file))
+		return (0);
+	return (1);
 }

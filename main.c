@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/28 16:40:08 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:29:13 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	main(int ac, char **av, char **env)
 		return (ft_putendl_fd("Error env is needed to launch cub3d", 2), 1);
 	else if (ac != 2)
 		return (ft_putendl_fd("Error wrong arguments count", 2), 1);
+	else if (!ft_check_map_extension(av[1]))
+		return (ft_putendl_fd("Error invalid map extension", 2), 1);
 	else
 	{
 		test = ft_read_map(av[1]);
