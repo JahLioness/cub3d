@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/30 13:27:37 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:12:43 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "libft/libft.h"
 # include <math.h>
 
-# define HEIGHT 512
+# define HEIGHT	512
 # define WIDTH 1024
 # define PIXEL 48
 # define PI 3.1415926535
@@ -26,6 +26,10 @@
 # define KEY_S 115
 # define KEY_D 100
 # define KEY_ESC 65307
+# define LEFT	37
+# define UP	38
+# define RIGHT	39
+# define DOWN	40
 
 typedef struct s_size
 {
@@ -56,11 +60,8 @@ typedef struct s_player
 {
 	double		pos_y;
 	double		pos_x;
-	double		dir_y;
-	double		dir_x;
-	double		delta_x;
-	double		delta_y;
-	double		player_angle;
+	double		next_y;
+	double		next_x;
 }				t_player;
 
 typedef struct s_mlx
@@ -74,13 +75,18 @@ typedef struct s_raycast
 {
 	double		dir_x;
 	double		dir_y;
+	double		delta_x;
+	double		delta_y;
 	double		plane_x;
 	double		plane_y;
 	double		camera_x;
 	double		ray_x;
 	double		ray_y;
+	double		side_x;
+	double		side_y;
 	int			map_x;
 	int			map_y;
+	
 }				t_raycast;
 
 typedef struct s_data
@@ -111,6 +117,7 @@ int				ft_check_player(char **map);
 /*		INIT		*/
 int				ft_clean_init_data(t_data *data);
 int				ft_clean_init_player(t_data *data);
+int				ft_clean_init_raycast(t_data *data);
 int				mlx_start(t_data *data);
 int				mlx_window_init(t_data *data);
 
@@ -133,6 +140,7 @@ int				**ft_convert_map(char **map);
 
 /*		RAYCAST_UTILS		*/
 int				ft_get_player_pos(t_data *data);
+int				ft_get_player_dir(t_data *data);
 
 /*		TEST		*/
 void			draw_player(t_data *data);

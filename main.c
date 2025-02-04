@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/30 13:29:13 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:03:22 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	display_game(t_data *data)
 	draw_player(data);
 	draw_ray(data);
 	mlx_hook(data->mlx->win, 2, 1L << 0, press_key, data);
+	// mlx_hook(data->mlx->win, 2, 1L << 0, press_key_dir, data);
 	mlx_loop(data->mlx->mlx);
 }
 
@@ -92,6 +93,7 @@ int	main(int ac, char **av, char **env)
 			i++;
 		}
 		ft_clean_init_player(&data);
+		ft_clean_init_raycast(&data);
 		if (!ft_get_player_pos(&data))
 			printf("player pos x = %f, player pos y = %f\n", data.player->pos_x, data.player->pos_y);
 		display_game(&data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 23:44:57 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/27 18:12:53 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:28:11 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	ft_free_data(t_data *data)
 	}
 	if (data->player)
 		free(data->player);
+	if (data->raycast)
+		free(data->raycast);
 	free(data->texture_f);
 	free(data->texture_c);
 	free(data->texture_n);

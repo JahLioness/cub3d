@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:52:07 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/01/27 18:21:54 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:07:29 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,34 @@ int	ft_clean_init_data(t_data *data)
 int	ft_clean_init_player(t_data *data)
 {
 	data->player = ft_calloc(1, sizeof(t_player));
+	if (!data->player)
+		return (1);
 	data->player->pos_x = 0;
 	data->player->pos_y = 0;
-	data->player->dir_x = 0;
-	data->player->dir_y = 0;
-	data->player->delta_x = 0;
-	data->player->delta_y = 0;
-	data->player->player_angle = 0;
+	data->player->next_x = 0;
+	data->player->next_y = 0;
 	return (0);
 }
-
+int	ft_clean_init_raycast(t_data *data)
+{
+	data->raycast = ft_calloc(1, sizeof(t_raycast));
+	if (!data->raycast)
+		return (1);
+	if (!ft_get_player_dir(data))
+		return (1);
+	data->raycast->delta_x = 0;
+	data->raycast->delta_y = 0;
+	data->raycast->plane_x = 0.66;
+	data->raycast->plane_y = 0;
+	data->raycast->camera_x = 0;
+	data->raycast->ray_x = 0;
+	data->raycast->ray_y = 0;
+	data->raycast->side_x = 0;
+	data->raycast->side_y = 0;
+	data->raycast->map_x = 0;
+	data->raycast->map_y = 0;
+	return (0);
+}
 t_size	*ft_screen_size(void *mlx)
 {
 	t_size	*size;
