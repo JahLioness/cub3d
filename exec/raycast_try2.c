@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast_test.c                                     :+:      :+:    :+:   */
+/*   raycast_try2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 14:25:19 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/05 16:40:24 by ede-cola         ###   ########.fr       */
+/*   Created: 2025/02/05 16:38:22 by ede-cola          #+#    #+#             */
+/*   Updated: 2025/02/05 17:22:47 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@ int ft_get_player_dir(t_data *data)
 		{
 			if (data->map->map_tab[i][j] == 'N')
 			{
-				data->raycast->dir_x = -1;
-				data->raycast->dir_y = 0;
+				data->raycast->dir_x = 0;
+				data->raycast->dir_y = 1;
 			}
 			else if (data->map->map_tab[i][j] == 'S')
+			{
+				data->raycast->dir_x = 0;
+				data->raycast->dir_y = -1;
+			}
+			else if (data->map->map_tab[i][j] == 'E')
 			{
 				data->raycast->dir_x = 1;
 				data->raycast->dir_y = 0;
 			}
-			else if (data->map->map_tab[i][j] == 'E')
-			{
-				data->raycast->dir_x = 0;
-				data->raycast->dir_y = 1;
-			}
 			else if (data->map->map_tab[i][j] == 'W')
 			{
-				data->raycast->dir_x = 0;
-				data->raycast->dir_y = -1;
+				data->raycast->dir_x = -1;
+				data->raycast->dir_y = 0;
 			}
 			j++;
 		}
@@ -115,6 +115,7 @@ void draw_wall(t_data *data)
 		y++;
 	}
 }
+
 void draw_player(t_data *data)
 {
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
@@ -134,10 +135,11 @@ void draw_ray(t_data *data)
 	while (i < data->map->width)
 	{
 		double camera_x = 2 * data->player->pos_x / data->map->width - 1;
+		double camera_y = 2 * data->player->pos_y / data->map->height - 1;
 		data->raycast->ray_x = data->raycast->dir_x + data->raycast->plane_x * camera_x;
-		data->raycast->ray_y = data->raycast->dir_y + data->raycast->plane_y * camera_x;
-		data->raycast->delta_x = (data->raycast->ray_y == 0) ? 1e30 : fabs(1 / data->raycast->ray_x);
-		data->raycast->delta_y = (data->raycast->ray_x == 0) ? 1e30 : fabs(1 / data->raycast->ray_y);
+		data->raycast->ray_y = data->raycast->dir_y + data->raycast->plane_y * camera_y;
+		data->raycast->delta_x = (data->raycast->ray_x == 0) ? 1e30 : fabs(1 / data->raycast->ray_x);
+		data->raycast->delta_y = (data->raycast->ray_y == 0) ? 1e30 : fabs(1 / data->raycast->ray_y);
 		data->raycast->map_x = data->player->pos_x;
 		data->raycast->map_y = data->player->pos_y;
 		if (data->raycast->map_x < 0 || data->raycast->map_x >= data->map->width || data->raycast->map_y < 0 || data->raycast->map_y >= data->map->height)
@@ -148,11 +150,20 @@ void draw_ray(t_data *data)
 				break;
 			if (data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] == 1)
 			{
-				mlx_pixel_put(data->mlx->mlx, data->mlx->win,
-							  (data->player->pos_x * PIXEL) + data->raycast->map_x,
-							  (data->player->pos_y * PIXEL) + data->raycast->map_y,
-							  0xFFFF00);
-				break;
+				while (data->raycast->map_x >= 0 && data->raycast->map_x < data->map->width && data->raycast->map_y >= 0 && data->raycast->map_y < data->map->height)
+				{
+					
+					// mlx_pixel_put(data->mlx->mlx, data->mlx->win,
+					// 			  (data->player->pos_x) + (data->raycast->ray_x * data->raycast->delta_x),
+					// 			  (data->player->pos_y) + (data->raycast->ray_y * data->raycast->delta_y),
+					// 			  0xFFFF00);
+					mlx_pixel_put(data->mlx->mlx, data->mlx->win,
+								(data->player->pos_x * (PIXEL + 2)) + (data->raycast->map_x * data->raycast->delta_x),
+								(data->player->pos_y * (PIXEL + 2)) + (data->raycast->map_y * data->raycast->delta_y),
+								0xFFFF00);
+					data->raycast->map_x += (data->raycast->ray_x > 0) ? 1 : -1;
+					data->raycast->map_y += (data->raycast->ray_y > 0) ? 1 : -1;
+				}
 			}
 			if (data->raycast->delta_x < data->raycast->delta_y)
 			{
@@ -263,4 +274,3 @@ int press_key(unsigned int keycode, t_data *data)
 	draw_ray(data);
 	return (0);
 }
-

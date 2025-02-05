@@ -5,14 +5,15 @@ CFLAGS = -Wall -Wextra -Werror -g3
 NAME = cub3d
 
 SRC = main.c \
-		parse/parse.c \
-		parse/parse_map.c \
-		init.c \
-		free.c \
-		utils.c \
-		parse/check_textures.c \
-		exec/convert_map.c \
-		exec/raycast_test.c \
+	parse/parse.c \
+	parse/parse_map.c \
+	init.c \
+	free.c \
+	utils.c \
+	parse/check_textures.c \
+	exec/convert_map.c \
+	exec/raycast_try2.c \
+	# exec/raycast_test.c \
 		
 HEADER = cub.h
 
@@ -40,7 +41,7 @@ $(NAME): $(OBJ) $(HEADER) $(LIBFT) $(MiniLibX_exec)
 			*----------------------------------*$(NC)"
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(LIBFT):
 	@make -C libft
