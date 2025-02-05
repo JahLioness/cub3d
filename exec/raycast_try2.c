@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:38:22 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/05 17:22:47 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:18:15 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void draw_ray(t_data *data)
 		data->raycast->ray_x = data->raycast->dir_x + data->raycast->plane_x * camera_x;
 		data->raycast->ray_y = data->raycast->dir_y + data->raycast->plane_y * camera_y;
 		data->raycast->delta_x = (data->raycast->ray_x == 0) ? 1e30 : fabs(1 / data->raycast->ray_x);
-		data->raycast->delta_y = (data->raycast->ray_y == 0) ? 1e30 : fabs(1 / data->raycast->ray_y);
+		data->raycast->delta_y = (data->raycast->ray_y == 0) ? 1e30 : fabs(1 * data->raycast->ray_y);
 		data->raycast->map_x = data->player->pos_x;
 		data->raycast->map_y = data->player->pos_y;
 		if (data->raycast->map_x < 0 || data->raycast->map_x >= data->map->width || data->raycast->map_y < 0 || data->raycast->map_y >= data->map->height)
@@ -158,8 +158,8 @@ void draw_ray(t_data *data)
 					// 			  (data->player->pos_y) + (data->raycast->ray_y * data->raycast->delta_y),
 					// 			  0xFFFF00);
 					mlx_pixel_put(data->mlx->mlx, data->mlx->win,
-								(data->player->pos_x * (PIXEL + 2)) + (data->raycast->map_x * data->raycast->delta_x),
-								(data->player->pos_y * (PIXEL + 2)) + (data->raycast->map_y * data->raycast->delta_y),
+								(data->raycast->map_x * (PIXEL + 2)) + (data->raycast->ray_x * data->raycast->delta_x),
+								(data->raycast->map_y * (PIXEL + 2)) + (data->raycast->ray_y * data->raycast->delta_y),
 								0xFFFF00);
 					data->raycast->map_x += (data->raycast->ray_x > 0) ? 1 : -1;
 					data->raycast->map_y += (data->raycast->ray_y > 0) ? 1 : -1;
