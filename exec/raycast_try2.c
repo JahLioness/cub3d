@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:38:22 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/06 14:38:05 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/02/06 17:03:55 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,22 @@ void draw_ray(t_data *data)
 		{
 			if (data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] != 1)
 			{
-				mlx_pixel_put(data->mlx->mlx, data->mlx->win,
-							(data->raycast->map_x * (PIXEL + 2)) + (data->raycast->ray_x * data->raycast->delta_x),
-							(data->raycast->map_y * (PIXEL + 2)) + (data->raycast->ray_y * data->raycast->delta_y),
-							0xFFFF00);
-				data->raycast->ray_x += (data->raycast->dir_x > 0) ? 1 : -1;
-				data->raycast->ray_y += (data->raycast->dir_y > 0) ? 1 : -1;
+				int j = 0;
+				int i = 0;
+				// int	test_x;
+				// int	test_y;
+				while ((i < (data->map->width * PIXEL) && data->raycast->ray_y < (j * PIXEL)))
+				{
+					mlx_pixel_put(data->mlx->mlx, data->mlx->win,
+								(data->player->pos_x * (PIXEL + 2)) + (data->raycast->ray_x * data->raycast->dir_x),
+								(data->player->pos_y * (PIXEL + 2)) + (data->raycast->ray_y * data->raycast->dir_y),
+								0xFFFF00);
+					data->raycast->ray_x += (data->raycast->delta_x > 0) ? 1 : -1;
+					i++;
+					data->raycast->ray_y += (data->raycast->delta_y > 0) ? 1 : -1;
+					j++;
+					
+				}
 			}
 			if (data->raycast->delta_x < data->raycast->delta_y)
 			{
@@ -193,23 +203,23 @@ int press_key(unsigned int keycode, t_data *data)
 	mlx_clear_window(data->mlx->mlx, data->mlx->win);
 	if (keycode == UP)
 	{
-		data->raycast->dir_x = 0;
-		data->raycast->dir_y = 1;
+		data->raycast->dir_x += 0;
+		data->raycast->dir_y += -1;
 	}
 	if (keycode == DOWN)
 	{
-		data->raycast->dir_x = 0;
-		data->raycast->dir_y = -1;
+		data->raycast->dir_x += 0;
+		data->raycast->dir_y += 1;
 	}
 	if (keycode == LEFT)
 	{
-		data->raycast->dir_x = 1;
+		data->raycast->dir_x += 1;
 		data->raycast->dir_y = 0;
 	}
 	if (keycode == RIGHT)
 	{
-		data->raycast->dir_x = -1;
-		data->raycast->dir_y = 0;
+		data->raycast->dir_x += -1;
+		data->raycast->dir_y += 0;
 	}
 	if (keycode == KEY_ESC)
 	{
