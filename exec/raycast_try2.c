@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:38:22 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/05 18:18:15 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:38:05 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int ft_get_player_dir(t_data *data)
 			if (data->map->map_tab[i][j] == 'N')
 			{
 				data->raycast->dir_x = 0;
-				data->raycast->dir_y = 1;
+				data->raycast->dir_y = -1;
 			}
 			else if (data->map->map_tab[i][j] == 'S')
 			{
 				data->raycast->dir_x = 0;
-				data->raycast->dir_y = -1;
+				data->raycast->dir_y = 1;
 			}
 			else if (data->map->map_tab[i][j] == 'E')
 			{
@@ -132,6 +132,8 @@ void draw_ray(t_data *data)
 	printf("dir_y = %f\n", data->raycast->dir_y);
 	printf("plane_x = %f\n", data->raycast->plane_x);
 	printf("plane_y = %f\n", data->raycast->plane_y);
+	printf("ray_x = %f\n", data->raycast->ray_x);
+	printf("ray_y = %f\n", data->raycast->ray_y);
 	while (i < data->map->width)
 	{
 		double camera_x = 2 * data->player->pos_x / data->map->width - 1;
@@ -144,26 +146,16 @@ void draw_ray(t_data *data)
 		data->raycast->map_y = data->player->pos_y;
 		if (data->raycast->map_x < 0 || data->raycast->map_x >= data->map->width || data->raycast->map_y < 0 || data->raycast->map_y >= data->map->height)
 			break;
-		while (1)
+		while (data->raycast->map_x > 0 && data->raycast->map_x <= data->map->width && data->raycast->map_y > 0 && data->raycast->map_y <= data->map->height)
 		{
-			if (data->raycast->map_x < 0 || data->raycast->map_x >= data->map->width || data->raycast->map_y < 0 || data->raycast->map_y >= data->map->height)
-				break;
-			if (data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] == 1)
+			if (data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] != 1)
 			{
-				while (data->raycast->map_x >= 0 && data->raycast->map_x < data->map->width && data->raycast->map_y >= 0 && data->raycast->map_y < data->map->height)
-				{
-					
-					// mlx_pixel_put(data->mlx->mlx, data->mlx->win,
-					// 			  (data->player->pos_x) + (data->raycast->ray_x * data->raycast->delta_x),
-					// 			  (data->player->pos_y) + (data->raycast->ray_y * data->raycast->delta_y),
-					// 			  0xFFFF00);
-					mlx_pixel_put(data->mlx->mlx, data->mlx->win,
-								(data->raycast->map_x * (PIXEL + 2)) + (data->raycast->ray_x * data->raycast->delta_x),
-								(data->raycast->map_y * (PIXEL + 2)) + (data->raycast->ray_y * data->raycast->delta_y),
-								0xFFFF00);
-					data->raycast->map_x += (data->raycast->ray_x > 0) ? 1 : -1;
-					data->raycast->map_y += (data->raycast->ray_y > 0) ? 1 : -1;
-				}
+				mlx_pixel_put(data->mlx->mlx, data->mlx->win,
+							(data->raycast->map_x * (PIXEL + 2)) + (data->raycast->ray_x * data->raycast->delta_x),
+							(data->raycast->map_y * (PIXEL + 2)) + (data->raycast->ray_y * data->raycast->delta_y),
+							0xFFFF00);
+				data->raycast->ray_x += (data->raycast->dir_x > 0) ? 1 : -1;
+				data->raycast->ray_y += (data->raycast->dir_y > 0) ? 1 : -1;
 			}
 			if (data->raycast->delta_x < data->raycast->delta_y)
 			{
@@ -175,7 +167,11 @@ void draw_ray(t_data *data)
 				data->raycast->map_y += (data->raycast->ray_y > 0) ? 1 : -1;
 				data->raycast->delta_y += fabs(1 / data->raycast->ray_y);
 			}
+			if (data->raycast->map_y > 0 && data->raycast->map_x > 0 && data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] == 1)
+				break ;
 		}
+		if (data->raycast->map_y > 0 && data->raycast->map_x > 0 && data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] == 1)
+				break ;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ede-cola <ede-cola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:25:19 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/05 16:40:24 by ede-cola         ###   ########.fr       */
+/*   Updated: 2025/02/06 13:55:12 by ede-cola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void draw_ray(t_data *data)
 		{
 			if (data->raycast->map_x < 0 || data->raycast->map_x >= data->map->width || data->raycast->map_y < 0 || data->raycast->map_y >= data->map->height)
 				break;
-			if (data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] == 1)
+			if (data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] != 1)
 			{
 				mlx_pixel_put(data->mlx->mlx, data->mlx->win,
 							  (data->player->pos_x * PIXEL) + data->raycast->map_x,
