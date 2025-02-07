@@ -14,7 +14,7 @@ SRC = main.c \
 	exec/convert_map.c \
 	exec/raycast_try2.c \
 	# exec/raycast_test.c \
-		
+
 HEADER = cub.h
 
 LIBFT = libft/libft.a
