@@ -6,7 +6,7 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 14:25:19 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/07 06:18:15 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/02/07 21:27:14 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,139 +125,33 @@ void	draw_player(t_data *data)
 		data->player->pos_y * (PIXEL + 2));
 }
 
-void	draw_ray(t_data *data)
-{
-	int		i;
-	double	camera_x;
-		double side_dist_x;
-		double side_dist_y;
-	int		hit;
-		double perp_wall_dist;
-	int		line_height;
-	int		draw_start;
-	int		draw_end;
-
-	i = 0;
-	while (i < data->map->width)
-	{
-		camera_x = 2 * i / (double)data->map->width - 1;
-		data->raycast->ray_x = data->raycast->dir_x + data->raycast->plane_x
-			* camera_x;
-		data->raycast->ray_y = data->raycast->dir_y + data->raycast->plane_y
-			* camera_x;
-		data->raycast->delta_x = (data->raycast->ray_y == 0) ? 1e30 : fabs(1
-				/ data->raycast->ray_x);
-		data->raycast->delta_y = (data->raycast->ray_x == 0) ? 1e30 : fabs(1
-				/ data->raycast->ray_y);
-		data->raycast->map_x = (int)data->player->pos_x;
-		data->raycast->map_y = (int)data->player->pos_y;
-		int step_x, step_y;
-		if (data->raycast->ray_x < 0)
-		{
-			step_x = -1;
-			side_dist_x = (data->player->pos_x - data->raycast->map_x)
-				* data->raycast->delta_x;
-		}
-		else
-		{
-			step_x = 1;
-			side_dist_x = (data->raycast->map_x + 1.0 - data->player->pos_x)
-				* data->raycast->delta_x;
-		}
-		if (data->raycast->ray_y < 0)
-		{
-			step_y = -1;
-			side_dist_y = (data->player->pos_y - data->raycast->map_y)
-				* data->raycast->delta_y;
-		}
-		else
-		{
-			step_y = 1;
-			side_dist_y = (data->raycast->map_y + 1.0 - data->player->pos_y)
-				* data->raycast->delta_y;
-		}
-		hit = 0;
-		while (!hit)
-		{
-			if (side_dist_x < side_dist_y)
-			{
-				side_dist_x += data->raycast->delta_x;
-				data->raycast->map_x += step_x;
-				if (data->map->map_int[data->raycast->map_y][data->raycast->map_x] == 1)
-					hit = 1;
-			}
-			else
-			{
-				side_dist_y += data->raycast->delta_y;
-				data->raycast->map_y += step_y;
-				if (data->map->map_int[data->raycast->map_y][data->raycast->map_x] == 1)
-					hit = 1;
-			}
-			// Assure que les coordonnées sont valides
-			if (data->raycast->map_x < 0
-				|| data->raycast->map_x >= data->map->width
-				|| data->raycast->map_y < 0
-				|| data->raycast->map_y >= data->map->height)
-			{
-				hit = 1;
-			}
-		}
-		if (data->raycast->map_x != data->player->pos_x)
-			perp_wall_dist = (data->raycast->map_x - data->player->pos_x + (1
-						- step_x) / 2) / data->raycast->ray_x;
-		else
-			perp_wall_dist = (data->raycast->map_y - data->player->pos_y + (1
-						- step_y) / 2) / data->raycast->ray_y;
-		// Calcul de la hauteur de la ligne en fonction de la distance au mur
-		line_height = (int)(data->map->height / perp_wall_dist);
-		// Calcul des positions de début et fin de la ligne (afin de dessiner le rayon à la bonne position)
-		draw_start = -line_height / 2 + data->map->height / 2;
-		if (draw_start < 0)
-			draw_start = 0;
-		draw_end = line_height / 2 + data->map->height / 2;
-		if (draw_end >= data->map->height)
-			draw_end = data->map->height - 1;
-		// Dessin du rayon à la bonne position (ajout du facteur de mise à l'échelle pour chaque colonne)
-		int color = 0xFFFF00; // Choisir la couleur du rayon
-		for (int y = draw_start; y < draw_end; y++)
-		{
-			mlx_pixel_put(data->mlx->mlx, data->mlx->win, i * PIXEL, y, color);
-		}
-		i++;
-	}
-}
-
 // void	draw_ray(t_data *data)
 // {
 // 	int		i;
 // 	double	camera_x;
-// 		double side_dist_x;
-// 		double side_dist_y;
+// 	double	side_dist_x;
+// 	double	side_dist_y;
+// 	int		hit;
+// 	double	perp_wall_dist;
 // 	int		line_height;
 // 	int		draw_start;
 // 	int		draw_end;
 
-// 	// int map_x, map_y;
 // 	i = 0;
 // 	while (i < data->map->width)
 // 	{
-// 		// Calcul de la direction du rayon pour chaque colonne
-// 		camera_x = (2 * i / (double)data->map->width) - 1;
+// 		camera_x = 2 * i / (double)data->map->width - 1;
 // 		data->raycast->ray_x = data->raycast->dir_x + data->raycast->plane_x
 // 			* camera_x;
 // 		data->raycast->ray_y = data->raycast->dir_y + data->raycast->plane_y
 // 			* camera_x;
-// 		// Calcul des différences (delta) pour chaque direction
 // 		data->raycast->delta_x = (data->raycast->ray_y == 0) ? 1e30 : fabs(1
 // 				/ data->raycast->ray_x);
 // 		data->raycast->delta_y = (data->raycast->ray_x == 0) ? 1e30 : fabs(1
 // 				/ data->raycast->ray_y);
-// 		// Position initiale du rayon (en coordonnées flottantes)
 // 		data->raycast->map_x = (int)data->player->pos_x;
 // 		data->raycast->map_y = (int)data->player->pos_y;
-// 		// Variables pour les étapes du rayon
 // 		int step_x, step_y;
-// 		// Calcul des étapes et des distances initiales pour chaque direction
 // 		if (data->raycast->ray_x < 0)
 // 		{
 // 			step_x = -1;
@@ -282,16 +176,13 @@ void	draw_ray(t_data *data)
 // 			side_dist_y = (data->raycast->map_y + 1.0 - data->player->pos_y)
 // 				* data->raycast->delta_y;
 // 		}
-// 		// DDA loop : progression dans la grille
-// 		int hit = 0; // Flag pour savoir si on touche un mur
+// 		hit = 0;
 // 		while (!hit)
 // 		{
-// 			// On avance dans la direction X ou Y selon la distance minimale
 // 			if (side_dist_x < side_dist_y)
 // 			{
 // 				side_dist_x += data->raycast->delta_x;
 // 				data->raycast->map_x += step_x;
-// 				// Vérifie si le rayon touche un mur (mur = 1 dans la carte)
 // 				if (data->map->map_int[data->raycast->map_y][data->raycast->map_x] == 1)
 // 					hit = 1;
 // 			}
@@ -299,7 +190,6 @@ void	draw_ray(t_data *data)
 // 			{
 // 				side_dist_y += data->raycast->delta_y;
 // 				data->raycast->map_y += step_y;
-// 				// Vérifie si le rayon touche un mur (mur = 1 dans la carte)
 // 				if (data->map->map_int[data->raycast->map_y][data->raycast->map_x] == 1)
 // 					hit = 1;
 // 			}
@@ -312,76 +202,130 @@ void	draw_ray(t_data *data)
 // 				hit = 1;
 // 			}
 // 		}
-// 		// Calcul de la hauteur de ligne pour l'affichage du rayon
-// 		line_height = (int)(data->map->height / (data->raycast->map_y
-// 					- data->player->pos_y));
+// 		if (data->raycast->map_x != data->player->pos_x)
+// 			perp_wall_dist = (data->raycast->map_x - data->player->pos_x + (1
+// 						- step_x) / 2) / data->raycast->ray_x;
+// 		else
+// 			perp_wall_dist = (data->raycast->map_y - data->player->pos_y + (1
+// 						- step_y) / 2) / data->raycast->ray_y;
+// 		// Calcul de la hauteur de la ligne en fonction de la distance au mur
+// 		line_height = (int)(data->map->height / perp_wall_dist);
+// 		// Calcul des positions de début et fin de la ligne (afin de dessiner le rayon à la bonne position)
 // 		draw_start = -line_height / 2 + data->map->height / 2;
+// 		if (draw_start < 0)
+// 			draw_start = 0;
 // 		draw_end = line_height / 2 + data->map->height / 2;
+// 		if (draw_end >= data->map->height)
+// 			draw_end = data->map->height - 1;
 // 		// Dessin du rayon à la bonne position (ajout du facteur de mise à l'échelle pour chaque colonne)
-// 		mlx_pixel_put(data->mlx->mlx, data->mlx->win, i * PIXEL, draw_start,
-// 			0xFFFF00); // Pour les pixels en haut
-// 		mlx_pixel_put(data->mlx->mlx, data->mlx->win, i * PIXEL, draw_end,
-// 			0xFFFF00);   // Pour les pixels en bas
-// 		i++;
-// 	}
-// }
-
-// void	draw_ray(t_data *data)
-// {
-// 	int		i;
-// 	double	camera_x;
-
-// 	i = 0;
-// 	printf("dir_x = %f\n", data->raycast->dir_x);
-// 	printf("dir_y = %f\n", data->raycast->dir_y);
-// 	printf("plane_x = %f\n", data->raycast->plane_x);
-// 	printf("plane_y = %f\n", data->raycast->plane_y);
-// 	while (i < data->map->width)
-// 	{
-// 		camera_x = (2 * i / (double)data->map->width) - 1;
-// 		data->raycast->ray_x = data->raycast->dir_x + data->raycast->plane_x
-// 			* camera_x;
-// 		data->raycast->ray_y = data->raycast->dir_y + data->raycast->plane_y
-// 			* camera_x;
-// 		data->raycast->delta_x = (data->raycast->ray_y == 0) ? 1e30 :
-// 			fabs(1 / data->raycast->ray_x);
-// 		data->raycast->delta_y = (data->raycast->ray_x == 0) ? 1e30 :
-// 			fabs(1 / data->raycast->ray_y);
-// 		data->raycast->map_x = data->player->pos_x;
-// 		data->raycast->map_y = data->player->pos_y;
-// 		if (data->raycast->map_x < 0 || data->raycast->map_x >= data->map->width
-// 			|| data->raycast->map_y < 0
-// 			|| data->raycast->map_y >= data->map->height)
-// 			break ;
-// 		while (1)
+// 		int color = 0xFFFF00; // Choisir la couleur du rayon
+// 		for (int y = draw_start; y < draw_end; y++)
 // 		{
-// 			if (data->raycast->map_x < 0
-// 				|| data->raycast->map_x >= data->map->width
-// 				|| data->raycast->map_y < 0
-// 				|| data->raycast->map_y >= data->map->height)
-// 				break ;
-// 			if (data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] != 1)
-// 			{
-// 				mlx_pixel_put(data->mlx->mlx, data->mlx->win,
-// 					(data->player->pos_x * PIXEL) + data->raycast->map_x,
-// 					(data->player->pos_y * PIXEL) + data->raycast->map_y,
-// 					0xFFFF00);
-// 				break ;
-// 			}
-// 			if (data->raycast->delta_x < data->raycast->delta_y)
-// 			{
-// 				data->raycast->map_x += (data->raycast->ray_x > 0) ? 1 : -1;
-// 				data->raycast->delta_x += fabs(1 / data->raycast->ray_x);
-// 			}
-// 			else
-// 			{
-// 				data->raycast->map_y += (data->raycast->ray_y > 0) ? 1 : -1;
-// 				data->raycast->delta_y += fabs(1 / data->raycast->ray_y);
-// 			}
+// 			mlx_pixel_put(data->mlx->mlx, data->mlx->win, i * PIXEL, y, color);
 // 		}
 // 		i++;
 // 	}
 // }
+
+void	draw_ray(t_data *data)
+{
+	int		i;
+	double	camera_x;
+		double side_dist_x;
+		double side_dist_y;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+
+	// int map_x, map_y;
+	i = 0;
+	while (i < data->map->width)
+	{
+		// Calcul de la direction du rayon pour chaque colonne
+		camera_x = (2 * i / (double)data->map->width) - 1;
+		data->raycast->ray_x = data->raycast->dir_x + data->raycast->plane_x
+			* camera_x;
+		data->raycast->ray_y = data->raycast->dir_y + data->raycast->plane_y
+			* camera_x;
+		// Calcul des différences (delta) pour chaque direction
+		data->raycast->delta_x = (data->raycast->ray_y == 0) ? 1e30 : fabs(1
+				/ data->raycast->ray_x);
+		data->raycast->delta_y = (data->raycast->ray_x == 0) ? 1e30 : fabs(1
+				/ data->raycast->ray_y);
+		// Position initiale du rayon (en coordonnées flottantes)
+		data->raycast->map_x = (int)data->player->pos_x;
+		data->raycast->map_y = (int)data->player->pos_y;
+		// Variables pour les étapes du rayon
+		int step_x, step_y;
+		// Calcul des étapes et des distances initiales pour chaque direction
+		if (data->raycast->ray_x < 0)
+		{
+			step_x = -1;
+			side_dist_x = (data->player->pos_x - data->raycast->map_x)
+				* data->raycast->delta_x;
+		}
+		else
+		{
+			step_x = 1;
+			side_dist_x = (data->raycast->map_x + 1.0 - data->player->pos_x)
+				* data->raycast->delta_x;
+		}
+		if (data->raycast->ray_y < 0)
+		{
+			step_y = -1;
+			side_dist_y = (data->player->pos_y - data->raycast->map_y)
+				* data->raycast->delta_y;
+		}
+		else
+		{
+			step_y = 1;
+			side_dist_y = (data->raycast->map_y + 1.0 - data->player->pos_y)
+				* data->raycast->delta_y;
+		}
+		// DDA loop : progression dans la grille
+		int hit = 0; // Flag pour savoir si on touche un mur
+		while (!hit)
+		{
+			// On avance dans la direction X ou Y selon la distance minimale
+			if (side_dist_x < side_dist_y)
+			{
+				side_dist_x += data->raycast->delta_x;
+				data->raycast->map_x += step_x;
+				// Vérifie si le rayon touche un mur (mur = 1 dans la carte)
+				if (data->map->map_int[data->raycast->map_y][data->raycast->map_x] == 1)
+					hit = 1;
+			}
+			else
+			{
+				side_dist_y += data->raycast->delta_y;
+				data->raycast->map_y += step_y;
+				// Vérifie si le rayon touche un mur (mur = 1 dans la carte)
+				if (data->map->map_int[data->raycast->map_y][data->raycast->map_x] == 1)
+					hit = 1;
+			}
+			// Assure que les coordonnées sont valides
+			if (data->raycast->map_x < 0
+				|| data->raycast->map_x >= data->map->width
+				|| data->raycast->map_y < 0
+				|| data->raycast->map_y >= data->map->height)
+			{
+				hit = 1;
+			}
+		}
+		// Calcul de la hauteur de ligne pour l'affichage du rayon
+		line_height = (int)(data->map->height / (data->raycast->map_y
+					- data->player->pos_y));
+		draw_start = -line_height / 2 + data->map->height / 2;
+		draw_end = line_height / 2 + data->map->height / 2;
+		// Dessin du rayon à la bonne position (ajout du facteur de mise à l'échelle pour chaque colonne)
+		mlx_pixel_put(data->mlx->mlx, data->mlx->win, i * PIXEL, draw_start,
+			0xFFFF00); // Pour les pixels en haut
+		mlx_pixel_put(data->mlx->mlx, data->mlx->win, i * PIXEL, draw_end,
+			0xFFFF00);   // Pour les pixels en bas
+		i++;
+	}
+}
+
 
 int	is_valid_move(double new_x, double new_y, t_data *data)
 {
@@ -398,28 +342,52 @@ int	is_valid_move(double new_x, double new_y, t_data *data)
 	return (1);
 }
 
-void	direction_key(unsigned int keycode, t_data *data)
+int	direction_key(unsigned int keycode, t_data *data)
 {
-	if (keycode == UP)
-	{
-		data->raycast->dir_x = 0;
-		data->raycast->dir_y = -1;
-	}
-	if (keycode == DOWN)
-	{
-		data->raycast->dir_x = 0;
-		data->raycast->dir_y = 1;
-	}
+	double	old_dir_x;
+	double	old_plane_x;
+
+	// if (keycode == UP)
+	// {
+	// 	printf("UP\n");
+	// 	data->raycast->dir_x = 0;
+	// 	data->raycast->dir_y = -1;
+	// }
+	// if (keycode == DOWN)
+	// {
+	// 	printf("DOWN\n");
+	// 	data->raycast->dir_x = 0;
+	// 	data->raycast->dir_y = 1;
+	// }
 	if (keycode == LEFT)
 	{
-		data->raycast->dir_x = 1;
-		data->raycast->dir_y = 0;
+		printf("LEFT\n");
+		old_dir_x = data->raycast->dir_x;
+		data->raycast->dir_x = data->raycast->dir_x * cos(-ROT_SPEED)
+			- data->raycast->dir_y * sin(-ROT_SPEED);
+		data->raycast->dir_y = old_dir_x * sin(-ROT_SPEED)
+			+ data->raycast->dir_y * cos(-ROT_SPEED);
+		old_plane_x = data->raycast->plane_x;
+		data->raycast->plane_x = data->raycast->plane_x * cos(-ROT_SPEED)
+			- data->raycast->plane_y * sin(-ROT_SPEED);
+		data->raycast->plane_y = old_plane_x * sin(-ROT_SPEED)
+			+ data->raycast->plane_y * cos(-ROT_SPEED);
 	}
 	if (keycode == RIGHT)
 	{
-		data->raycast->dir_x = -1;
-		data->raycast->dir_y = 0;
+		printf("RIGHT\n");
+		old_dir_x = data->raycast->dir_x;
+		data->raycast->dir_x = data->raycast->dir_x * cos(ROT_SPEED)
+			- data->raycast->dir_y * sin(ROT_SPEED);
+		data->raycast->dir_y = old_dir_x * sin(ROT_SPEED) + data->raycast->dir_y
+			* cos(ROT_SPEED);
+		old_plane_x = data->raycast->plane_x;
+		data->raycast->plane_x = data->raycast->plane_x * cos(ROT_SPEED)
+			- data->raycast->plane_y * sin(ROT_SPEED);
+		data->raycast->plane_y = old_plane_x * sin(ROT_SPEED)
+			+ data->raycast->plane_y * cos(ROT_SPEED);
 	}
+	return (0);
 }
 int	press_key(unsigned int keycode, t_data *data)
 {
@@ -441,11 +409,11 @@ int	press_key(unsigned int keycode, t_data *data)
 		ft_free_data(data);
 		exit(0);
 	}
-	if (keycode == KEY_A)
+	if (keycode == KEY_A || keycode == KEY_Q)
 		new_x -= 0.1;
 	if (keycode == KEY_D)
 		new_x += 0.1;
-	if (keycode == KEY_W)
+	if (keycode == KEY_W || keycode == KEY_Z)
 		new_y -= 0.1;
 	if (keycode == KEY_S)
 		new_y += 0.1;
@@ -463,77 +431,3 @@ int	press_key(unsigned int keycode, t_data *data)
 	draw_ray(data);
 	return (0);
 }
-
-// int	press_key(unsigned int keycode, t_data *data)
-// {
-// 	double	new_x;
-// 	double	new_y;
-
-// 	new_x = 0;
-// 	new_y = 0;
-// 	printf("delta_x = %f\n", data->raycast->delta_x);
-// 	printf("delta_y = %f\n", data->raycast->delta_y);
-// 	printf("pos_x = %f\n", data->player->pos_x);
-// 	printf("pos_y = %f\n", data->player->pos_y);
-// 	printf("player[%d][%d] = %d\n", (int)data->player->pos_y,
-// 		(int)data->player->pos_x,
-// 		data->map->map_int[(int)data->player->pos_y][(int)data->player->pos_x]);
-// 	mlx_clear_window(data->mlx->mlx, data->mlx->win);
-// 	if (keycode == UP)
-// 	{
-// 		data->raycast->dir_x = 0;
-// 		data->raycast->dir_y = 1;
-// 	}
-// 	if (keycode == DOWN)
-// 	{
-// 		data->raycast->dir_x = 0;
-// 		data->raycast->dir_y = -1;
-// 	}
-// 	if (keycode == LEFT)
-// 	{
-// 		data->raycast->dir_x = 1;
-// 		data->raycast->dir_y = 0;
-// 	}
-// 	if (keycode == RIGHT)
-// 	{
-// 		data->raycast->dir_x = -1;
-// 		data->raycast->dir_y = 0;
-// 	}
-// 	if (keycode == KEY_ESC)
-// 	{
-// 		ft_free_data(data);
-// 		exit(0);
-// 	}
-// 	if (keycode == KEY_A)
-// 	{
-// 		new_x = data->player->pos_x - 1 * 0.1;
-// 		new_y = data->player->pos_y;
-// 	}
-// 	if (keycode == KEY_D)
-// 	{
-// 		new_x = data->player->pos_x + 1 * 0.1;
-// 		new_y = data->player->pos_y;
-// 	}
-// 	if (keycode == KEY_W)
-// 	{
-// 		new_x = data->player->pos_x;
-// 		new_y = data->player->pos_y - 1 * 0.1;
-// 	}
-// 	if (keycode == KEY_S)
-// 	{
-// 		new_x = data->player->pos_x;
-// 		new_y = data->player->pos_y + 1 * 0.1;
-// 	}
-// 	if (is_valid_move(new_x, new_y, data))
-// 	{
-// 		printf("new_x = %f\n", new_x);
-// 		printf("new_y = %f\n", new_y);
-// 		data->player->pos_x = new_x;
-// 		data->player->pos_y = new_y;
-// 	}
-// 	draw_floor(data);
-// 	draw_wall(data);
-// 	draw_player(data);
-// 	draw_ray(data);
-// 	return (0);
-// }

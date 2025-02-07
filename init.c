@@ -6,7 +6,7 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:52:07 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/04 19:07:29 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/02/07 21:09:34 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ int	ft_clean_init_raycast(t_data *data)
 		return (1);
 	data->raycast->delta_x = 0;
 	data->raycast->delta_y = 0;
-	data->raycast->plane_x = 0.66;
-	data->raycast->plane_y = 0;
+	ft_get_player_dir(data);
+	// data->raycast->plane_x = 0.66;
+	// data->raycast->plane_y = 0;
+	data->raycast->plane_x = -data->raycast->dir_y * FOV;
+	data->raycast->plane_y = data->raycast->dir_x * FOV;
 	data->raycast->camera_x = 0;
 	data->raycast->ray_x = 0;
 	data->raycast->ray_y = 0;

@@ -6,16 +6,16 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:38:22 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/07 06:26:18 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/02/07 23:59:34 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-int ft_get_player_dir(t_data *data)
+int	ft_get_player_dir(t_data *data)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	while (i < ft_tab_len(data->map->map_tab))
@@ -50,10 +50,10 @@ int ft_get_player_dir(t_data *data)
 	return (1);
 }
 
-int ft_get_player_pos(t_data *data)
+int	ft_get_player_pos(t_data *data)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	while (i < ft_tab_len(data->map->map_tab))
@@ -74,10 +74,10 @@ int ft_get_player_pos(t_data *data)
 	return (1);
 }
 
-void draw_floor(t_data *data)
+void	draw_floor(t_data *data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
 	y = 0;
@@ -85,9 +85,11 @@ void draw_floor(t_data *data)
 	{
 		while (data->map->map_tab[y][x] && x < data->map->width)
 		{
-			if ((data->map->map_int[y][x] == 0 || data->map->map_int[y][x] == 3) && data->map->map_int[y][x] != 1 && data->map->map_int[y][x] != 2)
+			if ((data->map->map_int[y][x] == 0 || data->map->map_int[y][x] == 3)
+				&& data->map->map_int[y][x] != 1
+				&& data->map->map_int[y][x] != 2)
 				mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
-										data->mlx->img[0]->img, x * (PIXEL + 2), y * (PIXEL + 2));
+					data->mlx->img[0]->img, x * (PIXEL), y * (PIXEL));
 			x++;
 		}
 		x = 0;
@@ -95,10 +97,10 @@ void draw_floor(t_data *data)
 	}
 }
 
-void draw_wall(t_data *data)
+void	draw_wall(t_data *data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
 	y = 0;
@@ -108,7 +110,7 @@ void draw_wall(t_data *data)
 		{
 			if (data->map->map_int[y][x] == 1)
 				mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
-										data->mlx->img[1]->img, x * (PIXEL + 2), y * (PIXEL + 2));
+					data->mlx->img[1]->img, x * (PIXEL), y * (PIXEL));
 			x++;
 		}
 		x = 0;
@@ -116,81 +118,95 @@ void draw_wall(t_data *data)
 	}
 }
 
-void draw_player(t_data *data)
+void	draw_player(t_data *data)
 {
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
-							data->mlx->img[2]->img, data->player->pos_x * (PIXEL + 2),
-							data->player->pos_y * (PIXEL + 2));
+		data->mlx->img[2]->img, data->player->pos_x * (PIXEL),
+		data->player->pos_y * (PIXEL));
 }
 
-void draw_ray(t_data *data)
+void	draw_ray2(t_data *data, double ray_x, double ray_y, double dir_x,
+		double dir_y)
 {
-	int i;
+	int	map_x;
+	int	map_y;
+
+	while (1)
+	{
+		map_x = (int)ray_x;
+		map_y = (int)ray_y;
+		if (map_x < 0 || map_x >= data->map->width || map_y < 0
+			|| map_y >= data->map->height)
+			break ;
+		if (data->map->map_int[map_y][map_x] == 1)
+			break ;
+		mlx_pixel_put(data->mlx->mlx, data->mlx->win, (ray_x * PIXEL) + (PIXEL
+				/ (PIXEL / 2)), (ray_y * PIXEL) + (PIXEL / (PIXEL / 2)),
+			0x00FF00);
+		// Avancer petit à petit dans la direction du rayon
+		ray_x += dir_x * 0.1;
+		ray_y += dir_y * 0.1;
+	}
+}
+
+void	draw_ray(t_data *data)
+{
+	int	i;
+	int	step_x;
+	int	step_y;
+	int	hit;
 
 	i = 0;
-	printf("dir_x = %f\n", data->raycast->dir_x);
-	printf("dir_y = %f\n", data->raycast->dir_y);
-	printf("plane_x = %f\n", data->raycast->plane_x);
-	printf("plane_y = %f\n", data->raycast->plane_y);
-	printf("ray_x = %f\n", data->raycast->ray_x);
-	printf("ray_y = %f\n", data->raycast->ray_y);
 	while (i < data->map->width)
 	{
-		double camera_x = 2 * data->player->pos_x / data->map->width - 1;
-		double camera_y = 2 * data->player->pos_y / data->map->height - 1;
-		data->raycast->ray_x = data->raycast->dir_x + data->raycast->plane_x * camera_x;
-		data->raycast->ray_y = data->raycast->dir_y + data->raycast->plane_y * camera_y;
-		data->raycast->delta_x = (data->raycast->ray_x == 0) ? 1e30 : fabs(1 / data->raycast->ray_x);
-		data->raycast->delta_y = (data->raycast->ray_y == 0) ? 1e30 : fabs(1 * data->raycast->ray_y);
-		data->raycast->map_x = data->player->pos_x;
-		data->raycast->map_y = data->player->pos_y;
-		if (data->raycast->map_x < 0 || data->raycast->map_x >= data->map->width || data->raycast->map_y < 0 || data->raycast->map_y >= data->map->height)
-			break;
-		while (data->raycast->map_x > 0 && data->raycast->map_x <= data->map->width && data->raycast->map_y > 0 && data->raycast->map_y <= data->map->height)
+		// 1. Calcul de la direction du rayon dans l'espace caméra
+		data->raycast->camera_x = 2 * i / (double)data->map->width - 1;
+		data->raycast->ray_x = data->raycast->dir_x + data->raycast->plane_x
+			* data->raycast->camera_x;
+		data->raycast->ray_y = data->raycast->dir_y + data->raycast->plane_y
+			* data->raycast->camera_x;
+		// 2. Position actuelle du joueur
+		data->raycast->map_x = (int)data->player->pos_x;
+		data->raycast->map_y = (int)data->player->pos_y;
+		// 3. Distance à la première intersection de grille
+		data->raycast->delta_x = (data->raycast->ray_x == 0) ? 1e30 : fabs(1
+				/ data->raycast->ray_x);
+		data->raycast->delta_y = (data->raycast->ray_y == 0) ? 1e30 : fabs(1
+				/ data->raycast->ray_y);
+		// 4. Détermination des directions de progression
+		step_x = (data->raycast->ray_x < 0) ? -1 : 1;
+		data->raycast->side_x = (data->raycast->ray_x < 0) ? (data->player->pos_x
+				- data->raycast->map_x)
+			* data->raycast->delta_x : (data->raycast->map_x + 1.0
+				- data->player->pos_x) * data->raycast->delta_x;
+		step_y = (data->raycast->ray_y < 0) ? -1 : 1;
+		data->raycast->side_y = (data->raycast->ray_y < 0) ? (data->player->pos_y
+				- data->raycast->map_y)
+			* data->raycast->delta_y : (data->raycast->map_y + 1.0
+				- data->player->pos_y) * data->raycast->delta_y;
+		// 5. Algorithme de DDA
+		hit = 0;
+		while (!hit)
 		{
-			if (data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] != 1)
+			if (data->raycast->side_x < data->raycast->side_y)
 			{
-				int j = 0;
-				int i = 0;
-				// int	test_x;
-				// int	test_y;
-
-				//i < (data->map->width * PIXEL) c'est la longueur du trait, faut trouver pour qu'il s'arrete au mur
-				while ((i < (data->map->width * PIXEL) && data->raycast->ray_y < (j * PIXEL)))
-				{
-					if (data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] == 1)
-						break;
-					mlx_pixel_put(data->mlx->mlx, data->mlx->win,
-								(data->player->pos_x * (PIXEL + 2)) + (data->raycast->ray_x * data->raycast->dir_x),
-								(data->player->pos_y * (PIXEL + 2)) + (data->raycast->ray_y * data->raycast->dir_y),
-								0xFFFF00);
-					data->raycast->ray_x += (data->raycast->delta_x > 0) ? 1 : -1;
-					i++;
-					data->raycast->ray_y += (data->raycast->delta_y > 0) ? 1 : -1;
-					printf("ray_x = %f\n", data->raycast->ray_x);
-					printf("ray_y = %f\n", data->raycast->ray_y);
-					j++;
-
-				}
-			}
-			if (data->raycast->delta_x < data->raycast->delta_y)
-			{
-				data->raycast->map_x += (data->raycast->ray_x > 0) ? 1 : -1;
-				data->raycast->delta_x += fabs(1 / data->raycast->ray_x);
+				data->raycast->side_x += data->raycast->delta_x;
+				data->raycast->map_x += step_x;
 			}
 			else
 			{
-				data->raycast->map_y += (data->raycast->ray_y > 0) ? 1 : -1;
-				data->raycast->delta_y += fabs(1 / data->raycast->ray_y);
+				data->raycast->side_y += data->raycast->delta_y;
+				data->raycast->map_y += step_y;
 			}
-			if (data->raycast->map_y >= 0 && data->raycast->map_x >= 0 && data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] == 1)
-				break ;
+			if (data->map->map_int[data->raycast->map_y][data->raycast->map_x] == 1)
+				hit = 1;
 		}
-		if (data->raycast->map_y >= 0 && data->raycast->map_x >= 0 && data->map->map_int[(int)data->raycast->map_y][(int)data->raycast->map_x] == 1)
-				break ;
+		draw_ray2(data, data->player->pos_x, data->player->pos_y,
+			data->raycast->ray_x, data->raycast->ray_y);
 		i++;
 	}
 }
+
 int	is_valid_move(double new_x, double new_y, t_data *data)
 {
 	int	map_x;
@@ -206,28 +222,40 @@ int	is_valid_move(double new_x, double new_y, t_data *data)
 	return (1);
 }
 
-void	direction_key(unsigned int keycode, t_data *data)
+int	direction_key(unsigned int keycode, t_data *data)
 {
-	if (keycode == UP)
-	{
-		data->raycast->dir_x = 0;
-		data->raycast->dir_y = -1;
-	}
-	if (keycode == DOWN)
-	{
-		data->raycast->dir_x = 0;
-		data->raycast->dir_y = 1;
-	}
+	double	old_dir_x;
+	double	old_plane_x;
+
 	if (keycode == LEFT)
 	{
-		data->raycast->dir_x = 1;
-		data->raycast->dir_y = 0;
+		printf("LEFT\n");
+		old_dir_x = data->raycast->dir_x;
+		data->raycast->dir_x = data->raycast->dir_x * cos(-ROT_SPEED)
+			- data->raycast->dir_y * sin(-ROT_SPEED);
+		data->raycast->dir_y = old_dir_x * sin(-ROT_SPEED)
+			+ data->raycast->dir_y * cos(-ROT_SPEED);
+		old_plane_x = data->raycast->plane_x;
+		data->raycast->plane_x = data->raycast->plane_x * cos(-ROT_SPEED)
+			- data->raycast->plane_y * sin(-ROT_SPEED);
+		data->raycast->plane_y = old_plane_x * sin(-ROT_SPEED)
+			+ data->raycast->plane_y * cos(-ROT_SPEED);
 	}
 	if (keycode == RIGHT)
 	{
-		data->raycast->dir_x = -1;
-		data->raycast->dir_y = 0;
+		printf("RIGHT\n");
+		old_dir_x = data->raycast->dir_x;
+		data->raycast->dir_x = data->raycast->dir_x * cos(ROT_SPEED)
+			- data->raycast->dir_y * sin(ROT_SPEED);
+		data->raycast->dir_y = old_dir_x * sin(ROT_SPEED) + data->raycast->dir_y
+			* cos(ROT_SPEED);
+		old_plane_x = data->raycast->plane_x;
+		data->raycast->plane_x = data->raycast->plane_x * cos(ROT_SPEED)
+			- data->raycast->plane_y * sin(ROT_SPEED);
+		data->raycast->plane_y = old_plane_x * sin(ROT_SPEED)
+			+ data->raycast->plane_y * cos(ROT_SPEED);
 	}
+	return (0);
 }
 int	press_key(unsigned int keycode, t_data *data)
 {
@@ -249,14 +277,14 @@ int	press_key(unsigned int keycode, t_data *data)
 		ft_free_data(data);
 		exit(0);
 	}
-	if (keycode == KEY_A)
-		new_x -= 0.1;
+	if (keycode == KEY_A || keycode == KEY_Q)
+		new_x -= MOVE_SPEED;
 	if (keycode == KEY_D)
-		new_x += 0.1;
-	if (keycode == KEY_W)
-		new_y -= 0.1;
+		new_x += MOVE_SPEED;
+	if (keycode == KEY_W || keycode == KEY_Z)
+		new_y -= MOVE_SPEED;
 	if (keycode == KEY_S)
-		new_y += 0.1;
+		new_y += MOVE_SPEED;
 	if (is_valid_move(new_x, new_y, data))
 	{
 		printf("new_x = %f\n", new_x);

@@ -6,7 +6,7 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/04 19:03:22 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/02/07 20:59:36 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int ac, char **av, char **env)
 		data.map->height = ft_tab_len(data.map->map_tab);
 		data.map->map_int = ft_convert_map(data.map->map_tab);
 		if (mlx_window_init(&data))
-			return (ft_free_data(&data), 
+			return (ft_free_data(&data),
 				ft_putendl_fd("Error initalizing window failed", 2), 1);
 		i = 0;
 		printf("\n");

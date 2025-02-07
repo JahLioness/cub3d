@@ -6,7 +6,7 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/04 19:12:43 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/02/07 23:54:45 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,25 @@
 # define HEIGHT	512
 # define WIDTH 1024
 # define PIXEL 48
-# define PI 3.1415926535
+# define FOV 0.66
+# define ROT_SPEED 0.1
+# define MOVE_SPEED 0.1
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
+# define KEY_Z 122
+# define KEY_Q 113
 # define KEY_ESC 65307
-# define LEFT	37
-# define UP	38
-# define RIGHT	39
-# define DOWN	40
+// # define LEFT	37
+// # define UP	38
+// # define RIGHT	39
+// # define DOWN	40
+# define LEFT	65361
+# define UP	65362
+# define RIGHT	65363
+# define DOWN	65364
+
 
 typedef struct s_size
 {
@@ -86,7 +95,7 @@ typedef struct s_raycast
 	double		side_y;
 	int			map_x;
 	int			map_y;
-	
+
 }				t_raycast;
 
 typedef struct s_data
@@ -149,5 +158,5 @@ void			draw_floor(t_data *data);
 void			draw_ray(t_data *data);
 void			display_game(t_data *data);
 int				press_key(unsigned int keycode, t_data *data);
-
+int				direction_key(unsigned int keycode, t_data *data);
 #endif
