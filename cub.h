@@ -6,7 +6,7 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:59:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/08 00:19:03 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/02/07 23:54:45 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@
 # define KEY_Z 122
 # define KEY_Q 113
 # define KEY_ESC 65307
-# define LEFT	65361
-# define UP	65362
-# define RIGHT	65363
-# define DOWN	65364
 // # define LEFT	37
 // # define UP	38
 // # define RIGHT	39
 // # define DOWN	40
+# define LEFT	65361
+# define UP	65362
+# define RIGHT	65363
+# define DOWN	65364
 
 
 typedef struct s_size
@@ -93,7 +93,6 @@ typedef struct s_raycast
 	double		ray_y;
 	double		side_x;
 	double		side_y;
-	double		wall_dist;
 	int			map_x;
 	int			map_y;
 
@@ -154,8 +153,7 @@ int				ft_get_player_dir(t_data *data);
 
 /*		TEST		*/
 void			draw_player(t_data *data);
-// void			draw_wall(t_data *data);
-void	draw_wall(t_data *data, int x, int draw_start, int draw_end, int color);
+void			draw_wall(t_data *data);
 void			draw_floor(t_data *data);
 void			draw_ray(t_data *data);
 void			display_game(t_data *data);
