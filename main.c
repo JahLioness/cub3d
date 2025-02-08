@@ -6,7 +6,7 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:20:17 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/07 20:59:36 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/02/08 00:24:19 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 void	display_game(t_data *data)
 {
-	draw_floor(data);
-	draw_wall(data);
-	draw_player(data);
+	// draw_floor(data);
+	// draw_wall(data);
+	// draw_player(data);
 	draw_ray(data);
 	mlx_hook(data->mlx->win, 2, 1L << 0, press_key, data);
-	// mlx_hook(data->mlx->win, 2, 1L << 0, press_key_dir, data);
 	mlx_loop(data->mlx->mlx);
 }
 
