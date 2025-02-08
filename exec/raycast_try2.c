@@ -6,7 +6,7 @@
 /*   By: andjenna <andjenna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:38:22 by ede-cola          #+#    #+#             */
-/*   Updated: 2025/02/08 00:59:26 by andjenna         ###   ########.fr       */
+/*   Updated: 2025/02/08 01:11:41 by andjenna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,21 +118,34 @@ void	draw_floor(t_data *data)
 // 	}
 // }
 
+// void	draw_wall(t_data *data, int x, int draw_start, int draw_end, int color)
+// {
+// 	int	y;
+
+// 	y = draw_start;
+// 	(void)color;
+// 	while (y < draw_end)
+// 	{
+// 		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
+// 			data->mlx->img[1]->img, x, y);
+// 			mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
+// 				data->mlx->img[1]->img, x, draw_start);
+
+// 		y++;
+// 	}
+// 	// mlx_pixel_put(data->mlx->mlx, data->mlx->win, x, y, color);
+// }
+
 void	draw_wall(t_data *data, int x, int draw_start, int draw_end, int color)
 {
 	int	y;
 
 	y = draw_start;
-	(void)color;
 	while (y < draw_end)
 	{
-		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
-			data->mlx->img[1]->img, x, y);
-		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
-			data->mlx->img[1]->img, WIDTH / 2, HEIGHT / 2);
+		mlx_pixel_put(data->mlx->mlx, data->mlx->win, x, y, color);
 		y++;
 	}
-	// mlx_pixel_put(data->mlx->mlx, data->mlx->win, x, y, color);
 }
 
 void	draw_player(t_data *data)
@@ -177,7 +190,7 @@ void	draw_ray(t_data *data)
 	int	color;
 
 	i = 0;
-	while (i < data->map->width)
+	while (i < WIDTH)
 	{
 		// 1. Calcul de la direction du rayon dans l'espace caméra
 		data->raycast->camera_x = 2 * i / (double)WIDTH - 1;
@@ -238,8 +251,6 @@ void	draw_ray(t_data *data)
 			draw_end = HEIGHT - 1;
 		color = (data->raycast->side_x < data->raycast->side_y) ? 0xAAAAAA : 0x777777;
 		draw_wall(data, i, draw_start, draw_end, color);
-		// draw_ray2(data, data->player->pos_x, data->player->pos_y,
-		// 	data->raycast->ray_x, data->raycast->ray_y);
 		i++;
 	}
 }
